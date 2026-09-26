@@ -1,16 +1,4 @@
-TU BELLEZA - VERSION COMPLETA
+TU BELLEZA - VERSION COMPATIBLE CON TABLETS
 
-Módulos incluidos:
-- Inicio / resumen
-- Servicios: agregar, editar, eliminar, precio, duración, categoría, descripción y foto por URL
-- Inventario: productos, entradas, salidas, mínimos y valor
-- Ventas: registro y totales
-- Clientes: datos y notas
-- Citas: cliente, servicio, fecha, hora, estado y notas
-- Galería de diseños
-- Configuración del nombre, descripción y moneda
-- Compartir app
-- Exportar/importar respaldo JSON
-- Datos guardados localmente en el dispositivo
-
-Para GitHub Pages: reemplazar index.html, sw.js, manifest.webmanifest, icon-192.png e icon-512.png en la raíz del repositorio.
+Reemplaza index.html y sw.js en tu repositorio de GitHub Pages.
+Esta versión evita funciones JavaScript recientes que pueden hacer que la PWA se cierre en tablets Android antiguas.
