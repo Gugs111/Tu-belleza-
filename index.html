@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09090d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Tu Belleza</title>
+<style>
+:root{--bg:#09090d;--card:#17151c;--pink:#ff86ae;--muted:#a9a5ad}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 18px 18px;background:linear-gradient(#28242d,#09090d)}
+h1{margin:8px 0 2px;font-size:34px;font-weight:300}h1 span{color:var(--pink);font-style:italic;font-weight:500}
+.subtitle{color:#bbb;font-size:14px}.search{margin-top:22px;background:#292832;border:0;border-radius:28px;padding:15px 18px;color:white;width:100%;font-size:15px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#17151c;border-top:1px solid #292631;display:flex;z-index:10}
+nav button{flex:1;background:none;border:0;color:#aaa;padding:11px 3px;font-size:11px}nav button.active{color:var(--pink)}
+main{padding:14px 14px 90px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--card);border-radius:18px;padding:15px;margin-bottom:10px}.cat{min-height:90px;display:flex;align-items:end;font-weight:bold;background:linear-gradient(135deg,#302b35,#18161c)}
+.quick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.quick button{border:0;border-radius:17px;padding:13px 7px;font-weight:bold;min-height:82px}
+.pink{background:#ff9cba}.lav{background:#c8cbe7}.green{background:#b7e7d7}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 10px}.sectiontitle h2{font-size:20px;margin:0}
+button{cursor:pointer}.btn{background:var(--pink);border:0;border-radius:13px;padding:12px 16px;font-weight:bold}
+.row{display:flex;align-items:center;gap:10px}.grow{flex:1}.muted{color:var(--muted);font-size:13px}
+.product{border:1px solid #292631}.low{color:#ffb36b}.qty{font-size:22px;font-weight:bold;color:var(--pink)}
+.actions{display:flex;gap:6px;margin-top:10px}.actions button{flex:1;border:1px solid #39343e;background:#25222b;color:white;border-radius:10px;padding:9px}
+input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #39343e;background:#201d25;color:#fff;margin:5px 0 10px}
+dialog{background:#17151c;color:#fff;border:1px solid #39343e;border-radius:18px;width:min(92%,420px)}dialog::backdrop{background:#000b}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat div{background:#17151c;border-radius:14px;padding:12px}.stat b{display:block;font-size:19px;color:var(--pink)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="muted">SALÓN DE BELLEZA</div>
+  <h1><span>Tu Belleza,</span><br>nuestro estilo</h1>
+  <div class="subtitle">Cortes • Tintes • Uñas • Más</div>
+  <input id="search" class="search" placeholder="Buscar producto o servicio...">
+</header>
+
+<main>
+<section id="home">
+  <div class="sectiontitle"><h2>Servicios</h2></div>
+  <div class="grid">
+    <div class="card cat">✂️<br>Cortes de cabello</div>
+    <div class="card cat">🎨<br>Tintes y coloración</div>
+    <div class="card cat">💅<br>Uñas y diseños</div>
+    <div class="card cat">💇<br>Peinados</div>
+    <div class="card cat">💄<br>Maquillaje</div>
+    <div class="card cat">✨<br>Cejas y pestañas</div>
+  </div>
+  <div class="sectiontitle"><h2>Accesos rápidos</h2></div>
+  <div class="quick">
+    <button class="pink" onclick="alert('Módulo de citas: próximamente')">📅<br>Reservar cita</button>
+    <button class="lav" onclick="show('inventory')">📦<br>Inventario</button>
+    <button class="green" onclick="alert('Módulo de ventas: próximamente')">🛒<br>Ventas</button>
+  </div>
+</section>
+
+<section id="inventory" class="hidden">
+  <div class="sectiontitle"><h2>📦 Inventario</h2><button class="btn" onclick="openProduct()">+ Producto</button></div>
+  <div class="stat">
+    <div><b id="nProducts">0</b>Productos</div>
+    <div><b id="nUnits">0</b>Unidades</div>
+    <div><b id="nLow">0</b>Bajo stock</div>
+    <div><b id="nValue">Q0</b>Valor estimado</div>
+  </div>
+  <div class="sectiontitle"><h2>Productos</h2></div>
+  <div id="products"></div>
+</section>
+</main>
+
+<nav>
+<button class="active" onclick="show('home',this)">⌂<br>Inicio</button>
+<button onclick="alert('Servicios: próximamente')">✂<br>Servicios</button>
+<button onclick="alert('Citas: próximamente')">📅<br>Citas</button>
+<button onclick="show('inventory',this)">📦<br>Inventario</button>
+<button onclick="alert('Clientes: próximamente')">👥<br>Clientes</button>
+</nav>
+
+<dialog id="dlg">
+<form method="dialog" onsubmit="saveProduct(event)">
+<h2 id="dlgTitle">Agregar producto</h2>
+<input type="hidden" id="pid">
+<label>Nombre</label><input id="pname" required>
+<label>Categoría</label><input id="pcat" placeholder="Tintes, Uñas, etc.">
+<label>Cantidad</label><input id="pqty" type="number" step="0.01" min="0" required>
+<label>Stock mínimo</label><input id="pmin" type="number" step="0.01" min="0" required>
+<label>Precio</label><input id="pprice" type="number" step="0.01" min="0" required>
+<div class="actions"><button type="button" onclick="dlg.close()">Cancelar</button><button class="btn">Guardar</button></div>
+</form>
+</dialog>
+
+<script>
+const KEY='tu_belleza_products_v1';
+let products=JSON.parse(localStorage.getItem(KEY)||'null')||[
+{id:'1',name:'Tinte castaño',cat:'Tintes',qty:8,min:3,price:35},
+{id:'2',name:'Oxidante 20 vol.',cat:'Tintes',qty:12,min:4,price:25},
+{id:'3',name:'Esmalte nude',cat:'Uñas',qty:2,min:3,price:30}
+];
+const save=()=>localStorage.setItem(KEY,JSON.stringify(products));
+const $=id=>document.getElementById(id);
+function show(id,btn){
+  $('home').classList.toggle('hidden',id!=='home');$('inventory').classList.toggle('hidden',id!=='inventory');
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); if(btn)btn.classList.add('active');
+  if(id==='inventory')render();
+}
+function render(){
+  const q=$('search').value.toLowerCase();
+  const list=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));
+  $('nProducts').textContent=products.length;
+  $('nUnits').textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);
+  $('nLow').textContent=products.filter(p=>p.qty<=p.min).length;
+  $('nValue').textContent='Q'+products.reduce((a,p)=>a+p.qty*p.price,0).toFixed(0);
+  $('products').innerHTML=list.map(p=>`
+  <div class="card product">
+    <div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} • Q${p.price.toFixed(2)}</div></div>
+    <div class="qty ${p.qty<=p.min?'low':''}">${p.qty}<div class="muted">existencia</div></div></div>
+    <div class="muted">Mínimo: ${p.min}</div>
+    <div class="actions">
+      <button onclick="move('${p.id}',1)">＋ Entrada</button>
+      <button onclick="move('${p.id}',-1)">− Salida</button>
+      <button onclick="edit('${p.id}')">✎ Editar</button>
+      <button onclick="del('${p.id}')">🗑</button>
+    </div>
+  </div>`).join('')||'<div class="card">No hay productos.</div>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function openProduct(p=null){
+  $('dlgTitle').textContent=p?'Editar producto':'Agregar producto';
+  $('pid').value=p?.id||'';$('pname').value=p?.name||'';$('pcat').value=p?.cat||'';
+  $('pqty').value=p?.qty??0;$('pmin').value=p?.min??1;$('pprice').value=p?.price??0;
+  $('dlg').showModal();
+}
+function saveProduct(e){
+  e.preventDefault();
+  const p={id:$('pid').value||Date.now().toString(),name:$('pname').value.trim(),cat:$('pcat').value.trim()||'General',
+  qty:+$('pqty').value,min:+$('pmin').value,price:+$('pprice').value};
+  const i=products.findIndex(x=>x.id===p.id);if(i>=0)products[i]=p;else products.push(p);
+  save();$('dlg').close();render();
+}
+function edit(id){openProduct(products.find(p=>p.id===id))}
+function del(id){if(confirm('¿Eliminar este producto?')){products=products.filter(p=>p.id!==id);save();render()}}
+function move(id,dir){
+  const p=products.find(x=>x.id===id), v=prompt(dir>0?'Cantidad de entrada:':'Cantidad de salida:','1');
+  const n=Number(v);if(!n||n<=0)return;if(dir<0&&n>p.qty){alert('No hay suficiente existencia.');return}
+  p.qty+=dir*n;save();render();
+}
+$('search').addEventListener('input',()=>{if(!$('inventory').classList.contains('hidden'))render()});
+render();
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}</script>
+</body>
+</html>
