@@ -1,13 +1,16 @@
-TU BELLEZA - VERSION PWA
+TU BELLEZA - VERSION COMPLETA
 
-Esta versión está preparada para instalarse desde Chrome como una aplicación web (PWA).
+Módulos incluidos:
+- Inicio / resumen
+- Servicios: agregar, editar, eliminar, precio, duración, categoría, descripción y foto por URL
+- Inventario: productos, entradas, salidas, mínimos y valor
+- Ventas: registro y totales
+- Clientes: datos y notas
+- Citas: cliente, servicio, fecha, hora, estado y notas
+- Galería de diseños
+- Configuración del nombre, descripción y moneda
+- Compartir app
+- Exportar/importar respaldo JSON
+- Datos guardados localmente en el dispositivo
 
-IMPORTANTE: para que Chrome permita instalarla como app debe publicarse en un sitio HTTPS, por ejemplo GitHub Pages.
-
-Archivos:
-- index.html: aplicación
-- manifest.webmanifest: configuración de instalación
-- sw.js: funcionamiento offline/cache
-- icon-192.png e icon-512.png: iconos
-
-Los datos del inventario se guardan localmente en el dispositivo mediante localStorage.
+Para GitHub Pages: reemplazar index.html, sw.js, manifest.webmanifest, icon-192.png e icon-512.png en la raíz del repositorio.
