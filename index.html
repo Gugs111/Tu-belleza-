@@ -1,103 +1,559 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0d0b10"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Tu Belleza"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0db018">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Tu Belleza">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
 <title>Tu Belleza</title>
 <style>
-:root{--bg:#0d0b10;--card:#18151d;--card2:#211d27;--pink:#ff86ae;--gold:#d8b36a;--text:#fff;--muted:#aaa4b0;--line:#332d39;--good:#9fe2c5;--warn:#ffc777;--danger:#ff8b8b}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}body{min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-header{padding:18px 16px 14px;background:linear-gradient(180deg,#28222d,#0d0b10)}header .brand{display:flex;align-items:center;gap:12px}.brand img{width:54px;height:54px;border-radius:50%;object-fit:cover}.brand h1{font-size:25px;margin:0;font-weight:500}.brand h1 span{color:var(--pink);font-style:italic}.brand small{color:var(--muted)}
-.search{margin-top:15px;width:100%;padding:13px 16px;border-radius:25px;border:1px solid var(--line);background:#211d27;color:white;outline:none}
-main{padding:14px 14px 92px;max-width:800px;margin:auto}.sectiontitle{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 2px 12px}.sectiontitle h2{font-size:21px;margin:0}.sectiontitle p{margin:4px 0;color:var(--muted);font-size:13px}.btn{background:var(--pink);color:#1b1015;border:0;border-radius:12px;padding:11px 14px;font-weight:700}.btn.gold{background:var(--gold)}.btn.dark{background:var(--card2);color:white;border:1px solid var(--line)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:var(--card);border:1px solid #241f29;border-radius:17px;padding:14px;margin-bottom:10px}.hero{padding:18px;background:linear-gradient(135deg,#29222d,#17131b)}.hero h2{margin:0 0 5px;font-size:25px}.hero p{margin:0;color:#c8c1cb;font-size:13px}.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat .card{margin:0}.stat b{display:block;color:var(--pink);font-size:21px;margin-bottom:3px}.muted{color:var(--muted);font-size:13px}.row{display:flex;align-items:center;gap:10px}.grow{flex:1}.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#2a2530;color:#ddd;font-size:11px}.pill.good{color:#173d2f;background:#bcebd7}.pill.warn{color:#543400;background:#ffd58e}.pill.danger{color:#5b1f1f;background:#ffc0c0}
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.quick button{border:0;border-radius:15px;padding:13px 6px;min-height:78px;font-weight:700}.q1{background:#ff9fbc}.q2{background:#d2d1ed}.q3{background:#b9e6d5}.q4{background:#f2d08d}.q5{background:#c7b3ed}.q6{background:#e7b6d0}
-.service,.product,.client,.appt,.sale{border:1px solid var(--line);background:var(--card)}.service-img{width:72px;height:72px;border-radius:13px;object-fit:cover;background:#29242d;display:flex;align-items:center;justify-content:center;font-size:30px}.price{font-size:20px;color:var(--gold);font-weight:700}.actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.actions button{flex:1;min-width:80px;border:1px solid var(--line);background:#25212b;color:white;border-radius:10px;padding:9px}.actions .danger{color:#ffaaaa}
-input,select,textarea{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#211d27;color:#fff;margin:4px 0 10px;outline:none}textarea{min-height:90px;resize:vertical}label{display:block;color:#d8d1db;font-size:13px;margin-top:5px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.full{grid-column:1/-1}
-dialog{width:min(94%,480px);background:#17141b;color:white;border:1px solid #403845;border-radius:19px;padding:0}dialog::backdrop{background:#000b}.dlghead{padding:17px;border-bottom:1px solid var(--line)}.dlgbody{padding:16px}.dlghead h3{margin:0}.dlgfoot{display:flex;gap:8px;justify-content:flex-end;padding:0 16px 16px}.empty{padding:25px;text-align:center;color:var(--muted);background:var(--card);border-radius:16px}
-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}nav button{flex:1;background:none;border:0;color:#9f98a5;padding:9px 2px 8px;font-size:10px}nav button.active{color:var(--pink)}
-.toast{position:fixed;z-index:50;left:50%;bottom:82px;transform:translateX(-50%);background:#fff;color:#171219;padding:11px 16px;border-radius:12px;box-shadow:0 5px 25px #0008;font-weight:700}.cover{height:130px;border-radius:16px;object-fit:cover;width:100%;background:#28232d}.gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gallery .card{padding:8px}.gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.dangerbox{border:1px solid #663a3a;background:#28191c}.switch{display:flex;align-items:center;justify-content:space-between;padding:12px 0}.switch input{width:auto;margin:0}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,1fr)}.gallery{grid-template-columns:repeat(3,1fr)}}
-
-/* Tablet Android 10 */
-@media (min-width:800px){main{max-width:1180px;padding-left:22px;padding-right:22px}.grid{grid-template-columns:repeat(4,1fr)}.gallery{grid-template-columns:repeat(4,1fr)}.quick{grid-template-columns:repeat(6,1fr)}header{padding-left:24px;padding-right:24px}.search{max-width:1180px;margin-left:auto;margin-right:auto}}
-@media (orientation:landscape){body{min-height:100dvh}nav button{font-size:12px;padding-top:10px;padding-bottom:10px}}
+:root{--bg:#0db018;--card:#18151d;--card2:#211d27;--pink:#ff86ae;--gold:#d8b36a;--text:#fff;--muted:#aaa4b0;--line:#332d33}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:18px 16px;width:100%;background:linear-gradient(180deg,#28222d,var(--bg));display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.search{margin:15px;width:100%;padding:10px 14px;background:var(--card);border-radius:12px;border:1px solid var(--line);color:var(--text);font-size:16px}
+main{padding:14px 16px;max-width:800px;margin:0 auto}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+@media (max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+.quick{display:grid;gap:14px;grid-template-columns:repeat(3,1fr);gap:8px}
+.quick button{border-radius:12px;padding:12px 8px;background:var(--card);color:var(--text);border:none;cursor:pointer}
+.service,.product,.client,.appointment,.sale{background:var(--card);border-radius:12px;padding:14px}
+img{max-width:100%;height:auto}
+input,select,textarea{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:none;background:#211d27;color:#fff;font-size:16px}
+input[type="file"]{padding:10px;background:#2a2530;cursor:pointer;color:#ddd}
+button{border:none;border-radius:10px;padding:12px 16px;font-size:16px;cursor:pointer}
+.btn-primario{background:var(--gold);color:#000;font-weight:bold}
+.btn-secundario{background:#3a3445;color:#fff}
+.dlg{background:#2a2530;border:1px solid #444;border-radius:14px;padding:20px;max-width:480px;margin:0 auto;box-shadow:0 0 20px rgba(0,0,0,0.5)}
+nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--line)}
+nav button{background:transparent;color:var(--text);border:none;padding:8px 12px;font-size:14px}
+nav button.active{color:var(--gold);border-top:2px solid var(--gold)}
+.toast{position:fixed;z-index:50;left:50%;bottom:80px;transform:translateX(-50%);background:#fff;color:#000;padding:12px 20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.hidden{display:none !important}
+@media (min-width:650px){.grid{grid-template-columns:repeat(3,1fr)}.gallery{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:800px){main{max-width:1180px;padding-left:22px;padding-right:22px}}
+@media (orientation:landscape){body{min-height:100vh}nav button{font-size:12px;padding-top:10px;padding-bottom:10px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand"><img src="icon-192.png"><div><h1><span id="appName">Tu Belleza</span></h1><small id="tagline">Salón de belleza</small></div></div>
+  <div class="brand"><img src="icon-192.png" alt="Logo Tu Belleza"><div><h1><span id="appName">Tu Belleza</span></h1><small id="tagline"></small></div></div>
   <input id="globalSearch" class="search" placeholder="Buscar en la sección..." oninput="renderCurrent()">
 </header>
 <main>
 <section id="home" class="page">
-  <div class="card hero"><h2>¡Bienvenida a Tu Belleza! ✨</h2><p>Administra servicios, inventario, ventas, clientes y citas desde tu celular.</p></div>
-  <div class="stat" style="margin-top:10px"><div class="card"><b id="dashSales">Q0</b>Ventas</div><div class="card"><b id="dashAppts">0</b>Citas</div><div class="card"><b id="dashClients">0</b>Clientes</div><div class="card"><b id="dashLow">0</b>Bajo stock</div></div>
+  <div class="card-hero"><h2>Bienvenida a Tu Belleza ✨</h2><p>Administra servicios, inventario, ventas, clientes y citas</p></div>
+  <div class="grid" style="margin-top:10px">
+    <div class="card"><b id="dashServices">0</b><br>Servicios</div>
+    <div class="card"><b id="dashSales">0</b><br>Ventas</div>
+    <div class="card"><b class="q2">0</b><br>Clientes</div>
+  </div>
   <div class="sectiontitle"><h2>Accesos rápidos</h2></div>
-  <div class="quick"><button class="q1" onclick="openService()">✂️<br>Nuevo servicio</button><button class="q2" onclick="openProduct()">📦<br>Producto</button><button class="q3" onclick="openClient()">👥<br>Cliente</button><button class="q4" onclick="openAppointment()">📅<br>Cita</button><button class="q5" onclick="openSale()">🛒<br>Venta</button><button class="q6" onclick="showPage('gallery')">🖼️<br>Galería</button></div>
-  <div class="sectiontitle"><h2>Servicios destacados</h2><button class="btn dark" onclick="showPage('services')">Ver todos</button></div><div id="homeServices"></div>
+  <div class="quick">
+    <button class="q1" onclick="showPage('services')">➕ Nuevo servicio</button>
+    <button class="q2" onclick="showPage('clients')">👤 Nuevo cliente</button>
+    <button class="q3" onclick="showPage('appointments')">📅 Nueva cita</button>
+  </div>
 </section>
-<section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Agrega y modifica tus servicios y precios.</p></div><button class="btn" onclick="openService()">+ Servicio</button></div><div id="servicesList"></div></section>
-<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Entradas, salidas y alertas de stock.</p></div><button class="btn" onclick="openProduct()">+ Producto</button></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
-<section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Registra ventas de servicios o productos.</p></div><button class="btn" onclick="openSale()">+ Venta</button></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
-<section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Datos e historial básico de tus clientas.</p></div><button class="btn" onclick="openClient()">+ Cliente</button></div><div id="clientsList"></div></section>
-<section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Agenda y consulta las citas.</p></div><button class="btn" onclick="openAppointment()">+ Cita</button></div><div id="apptsList"></div></section>
-<section id="gallery" class="page hidden"><div class="sectiontitle"><div><h2>🖼️ Galería</h2><p>Guarda ejemplos de tus trabajos.</p></div><button class="btn" onclick="openGallery()">+ Diseño</button></div><div id="galleryList" class="gallery"></div></section>
-<section id="settings" class="page hidden"><div class="sectiontitle"><div><h2>⚙️ Configuración</h2><p>Personaliza la app desde aquí.</p></div></div><div class="card"><label>Nombre del salón</label><input id="setName"><label>Descripción</label><input id="setTagline"><label>Moneda</label><select id="setCurrency"><option>Q</option><option>$</option><option>€</option></select><button class="btn" onclick="saveSettings()">Guardar configuración</button></div><div class="card"><h3>📲 Compartir app</h3><p class="muted">Comparte el enlace de tu app con WhatsApp u otra aplicación.</p><button class="btn gold" onclick="shareApp()">Compartir Tu Belleza</button></div><div class="card dangerbox"><h3>⚠️ Datos de este dispositivo</h3><p class="muted">La información se guarda localmente en este dispositivo. Borrar datos no afecta a otros teléfonos.</p><button class="btn dark" onclick="backupData()">Exportar respaldo</button><button class="btn dark" onclick="restoreData()">Importar respaldo</button><button class="btn" style="background:#ff9a9a" onclick="clearAll()">Borrar todos los datos</button></div></section>
+
+<section id="services" class="page hidden">
+  <div class="sectiontitle"><h2>Servicios</h2><button class="btn-primario" onclick="openServiceDlg()">➕ Agregar</button></div>
+  <div id="servicesList"></div>
+</section>
+
+<section id="inventory" class="page hidden">
+  <div class="sectiontitle"><h2>Inventario</h2><button class="btn-primario" onclick="openProductDlg()">➕ Agregar</button></div>
+  <div id="inventoryList"></div>
+</section>
+
+<section id="sales" class="page hidden">
+  <div class="sectiontitle"><h2>Ventas</h2><button class="btn-primario" onclick="openSaleDlg()">➕ Nueva venta</button></div>
+  <div id="salesList"></div>
+</section>
+
+<section id="clients" class="page hidden">
+  <div class="sectiontitle"><h2>Clientes</h2><button class="btn-primario" onclick="openClientDlg()">➕ Nuevo cliente</button></div>
+  <div id="clientsList"></div>
+</section>
+
+<section id="appointments" class="page hidden">
+  <div class="sectiontitle"><h2>Citas</h2><button class="btn-primario" onclick="openAppointmentDlg()">➕ Nueva cita</button></div>
+  <div id="appointmentsList"></div>
+</section>
+
+<section id="gallery" class="page hidden">
+  <div class="sectiontitle"><h2>Galería</h2><button class="btn-primario" onclick="openGalleryDlg()">📸 Agregar foto</button></div>
+  <div id="galleryList" class="grid"></div>
+</section>
+
+<section id="settings" class="page hidden">
+  <div class="sectiontitle"><h2>Configuración</h2></div>
+  <div style="padding:16px">
+    <label>Nombre del salón:</label>
+    <input type="text" id="shopNameInput" placeholder="Tu Belleza">
+    <button class="btn-primario" onclick="saveShopName()">Guardar nombre</button>
+  </div>
+</section>
 </main>
+
 <nav>
-<button data-page="home" class="active" onclick="showPage('home',this)">⌂<br>Inicio</button><button data-page="services" onclick="showPage('services',this)">✂<br>Servicios</button><button data-page="appointments" onclick="showPage('appointments',this)">📅<br>Citas</button><button data-page="inventory" onclick="showPage('inventory',this)">📦<br>Inventario</button><button data-page="clients" onclick="showPage('clients',this)">👥<br>Clientes</button><button data-page="settings" onclick="showPage('settings',this)">⚙<br>Más</button>
+  <button data-page="home" class="active" onclick="showPage('home',this)">🏠 Inicio</button>
+  <button data-page="services" onclick="showPage('services',this)">💇 Servicios</button>
+  <button data-page="inventory" onclick="showPage('inventory',this)">📦 Inventario</button>
+  <button data-page="sales" onclick="showPage('sales',this)">💰 Ventas</button>
+  <button data-page="clients" onclick="showPage('clients',this)">👥 Clientes</button>
+  <button data-page="appointments" onclick="showPage('appointments',this)">📅 Citas</button>
+  <button data-page="gallery" onclick="showPage('gallery',this)">🖼️ Galería</button>
+  <button data-page="settings" onclick="showPage('settings',this)">⚙️ Ajustes</button>
 </nav>
+
 <div id="toast" class="toast hidden"></div>
 
-<dialog id="serviceDlg"><form onsubmit="saveService(event)"><div class="dlghead"><h3 id="serviceDlgTitle">Nuevo servicio</h3></div><div class="dlgbody"><input type="hidden" id="sid"><label>Nombre *</label><input id="sname" required placeholder="Corte de cabello"><div class="formgrid"><div><label>Precio *</label><input id="sprice" type="number" step="0.01" min="0" required></div><div><label>Duración (min)</label><input id="sduration" type="number" min="0" value="60"></div></div><label>Categoría</label><input id="scat" placeholder="Cabello, Uñas, etc."><label>Descripción</label><textarea id="sdesc" placeholder="Detalles del servicio..."></textarea><label>Foto (URL opcional)</label><input id="simg" placeholder="https://..."></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="serviceDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<dialog id="productDlg"><form onsubmit="saveProduct(event)"><div class="dlghead"><h3 id="productDlgTitle">Nuevo producto</h3></div><div class="dlgbody"><input type="hidden" id="pid"><label>Nombre *</label><input id="pname" required><div class="formgrid"><div><label>Categoría</label><input id="pcat"></div><div><label>Precio *</label><input id="pprice" type="number" step="0.01" min="0" required></div><div><label>Existencia *</label><input id="pqty" type="number" step="0.01" min="0" required></div><div><label>Stock mínimo</label><input id="pmin" type="number" step="0.01" min="0" value="1"></div></div></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="productDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<dialog id="clientDlg"><form onsubmit="saveClient(event)"><div class="dlghead"><h3 id="clientDlgTitle">Nuevo cliente</h3></div><div class="dlgbody"><input type="hidden" id="cid"><label>Nombre *</label><input id="cname" required><div class="formgrid"><div><label>Teléfono</label><input id="cphone" inputmode="tel"></div><div><label>Fecha de nacimiento</label><input id="cbirth" type="date"></div></div><label>Notas</label><textarea id="cnote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="clientDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<dialog id="apptDlg"><form onsubmit="saveAppointment(event)"><div class="dlghead"><h3 id="apptDlgTitle">Nueva cita</h3></div><div class="dlgbody"><input type="hidden" id="aid"><label>Cliente *</label><select id="aclient" required></select><label>Servicio *</label><select id="aservice" required></select><div class="formgrid"><div><label>Fecha *</label><input id="adate" type="date" required></div><div><label>Hora *</label><input id="atime" type="time" required></div></div><label>Estado</label><select id="astatus"><option>Pendiente</option><option>Confirmada</option><option>Atendida</option><option>Cancelada</option></select><label>Notas</label><textarea id="anote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="apptDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<dialog id="saleDlg"><form onsubmit="saveSale(event)"><div class="dlghead"><h3>Nueva venta</h3></div><div class="dlgbody"><label>Concepto *</label><input id="saleConcept" required placeholder="Corte, tinte, producto..."><div class="formgrid"><div><label>Tipo</label><select id="saleType"><option>Servicio</option><option>Producto</option><option>Otro</option></select></div><div><label>Total *</label><input id="saleAmount" type="number" step="0.01" min="0" required></div></div><label>Cliente</label><select id="saleClient"><option value="">Sin cliente</option></select></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="saleDlg.close()">Cancelar</button><button class="btn">Guardar venta</button></div></form></dialog>
-<dialog id="galleryDlg"><form onsubmit="saveGallery(event)"><div class="dlghead"><h3>Nuevo diseño</h3></div><div class="dlgbody"><label>Título *</label><input id="gtitle" required><label>Categoría</label><input id="gcat" placeholder="Uñas, cabello, maquillaje..."><label>Imagen (URL)</label><input id="gimg" placeholder="https://..."><label>Descripción</label><textarea id="gdesc"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="galleryDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<input id="importFile" type="file" accept="application/json" class="hidden" onchange="doImport(event)">
+<!-- DIALOGOS -->
+<div id="serviceDlg" class="dlg hidden">
+  <form onsubmit="saveService(event)">
+    <h3 id="serviceDlgTitle">Nuevo servicio</h3>
+    <input type="text" id="serviceName" placeholder="Nombre del servicio" required>
+    <input type="number" id="servicePrice" placeholder="Precio" required>
+    <input type="file" id="serviceFoto" accept="image/*">
+    <button type="submit" class="btn-primario">Guardar</button>
+    <button type="button" class="btn-secundario" onclick="closeDlg('serviceDlg')">Cancelar</button>
+  </form>
+</div>
+
+<div id="productDlg" class="dlg hidden">
+  <form onsubmit="saveProduct(event)">
+    <h3 id="productDlgTitle">Nuevo producto</h3>
+    <input type="text" id="productName" placeholder="Nombre del producto" required>
+    <input type="number" id="productPrice" placeholder="Precio" required>
+    <input type="number" id="productStock" placeholder="Cantidad" required>
+    <input type="file" id="productFoto" accept="image/*">
+    <button type="submit" class="btn-primario">Guardar</button>
+    <button type="button" class="btn-secundario" onclick="closeDlg('productDlg')">Cancelar</button>
+  </form>
+</div>
+
+<div id="clientDlg" class="dlg hidden">
+  <form onsubmit="saveClient(event)">
+    <h3 id="clientDlgTitle">Nuevo cliente</h3>
+    <input type="text" id="clientName" placeholder="Nombre completo" required>
+    <input type="tel" id="clientPhone" placeholder="Teléfono">
+    <input type="email" id="clientEmail" placeholder="Correo">
+    <input type="file" id="clientFoto" accept="image/*">
+    <button type="submit" class="btn-primario">Guardar</button>
+    <button type="button" class="btn-secundario" onclick="closeDlg('clientDlg')">Cancelar</button>
+  </form>
+</div>
+
+<div id="appointmentDlg" class="dlg hidden">
+  <form onsubmit="saveAppointment(event)">
+    <h3 id="appDlgTitle">Nueva cita</h3>
+    <input type="text" id="appClientName" placeholder="Nombre del cliente" required>
+    <input type="date" id="appDate" required>
+    <input type="time" id="appTime" required>
+    <input type="text" id="appService" placeholder="Servicio">
+    <button type="submit" class="btn-primario">Guardar</button>
+    <button type="button" class="btn-secundario" onclick="closeDlg('appointmentDlg')">Cancelar</button>
+  </form>
+</div>
+
+<div id="galleryDlg" class="dlg hidden">
+  <form onsubmit="saveGallery(event)">
+    <h3>Nueva foto para la galería</h3>
+    <input type="file" id="galleryFoto" accept="image/*" required>
+    <input type="text" id="galleryDesc" placeholder="Descripción (opcional)">
+    <button type="submit" class="btn-primario">Subir foto</button>
+    <button type="button" class="btn-secundario" onclick="closeDlg('galleryDlg')">Cancelar</button>
+  </form>
+</div>
+
 <script>
-const K={services:'tb_services_v3',products:'tu_belleza_products_v1',clients:'tb_clients_v3',appts:'tb_appts_v3',sales:'tb_sales_v3',gallery:'tb_gallery_v3',settings:'tb_settings_v3'};
-let services=load(K.services,[]),products=load(K.products,[{id:'1',name:'Tinte castaño',cat:'Tintes',qty:8,min:3,price:35},{id:'2',name:'Oxidante 20 vol.',cat:'Tintes',qty:12,min:4,price:25},{id:'3',name:'Esmalte nude',cat:'Uñas',qty:2,min:3,price:30}]),clients=load(K.clients,[]),appts=load(K.appts,[]),sales=load(K.sales,[]),gallery=load(K.gallery,[]),settings=load(K.settings,{name:'Tu Belleza',tagline:'Salón de belleza',currency:'Q'});let current='home';
-function load(k,d){try{const x=localStorage.getItem(k);return x?JSON.parse(x):d}catch(e){return d}}function save(k,v){localStorage.setItem(k,JSON.stringify(v))}function money(n){return (settings.currency||'Q')+Number(n||0).toFixed(2)}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.remove('hidden');setTimeout(()=>e.classList.add('hidden'),2200)}
-function showPage(id,btn){current=id;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));document.getElementById('globalSearch').value='';renderCurrent()}
-function renderCurrent(){renderDashboard();if(current==='services')renderServices();if(current==='inventory')renderProducts();if(current==='clients')renderClients();if(current==='appointments')renderAppts();if(current==='sales')renderSales();if(current==='gallery')renderGallery();if(current==='home')renderHome()}
-function renderDashboard(){document.getElementById('dashSales').textContent=money(sales.reduce((a,x)=>a+x.amount,0));document.getElementById('dashAppts').textContent=appts.filter(x=>x.status!=='Cancelada').length;document.getElementById('dashClients').textContent=clients.length;document.getElementById('dashLow').textContent=products.filter(x=>x.qty<=x.min).length}
-function renderHome(){const q=document.getElementById('globalSearch').value.toLowerCase();let a=services.filter(s=>(s.name+' '+s.cat).toLowerCase().includes(q)).slice(0,4);document.getElementById('homeServices').innerHTML=a.length?a.map(serviceCard).join(''):'<div class="empty">Aún no hay servicios. Pulsa “Nuevo servicio” para empezar.</div>'}
-function serviceCard(s){return `<div class="card service"><div class="row">${s.img?`<img class="service-img" src="${esc(s.img)}" onerror="this.style.display='none'">`:'<div class="service-img">✂️</div>'}<div class="grow"><b>${esc(s.name)}</b><div class="muted">${esc(s.cat||'General')} · ${s.duration||0} min</div><div class="price">${money(s.price)}</div></div></div><div class="muted" style="margin-top:8px">${esc(s.desc||'')}</div><div class="actions"><button onclick="openService('${s.id}')">✎ Editar</button><button onclick="deleteService('${s.id}')" class="danger">🗑 Eliminar</button></div></div>`}
-function renderServices(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=services.filter(s=>(s.name+' '+s.cat+' '+s.desc).toLowerCase().includes(q));document.getElementById('servicesList').innerHTML=a.length?a.map(serviceCard).join(''):'<div class="empty">No hay servicios. Agrega el primero.</div>'}
-function openService(id){const s=services.find(x=>x.id===id);document.getElementById('serviceDlgTitle').textContent=s?'Editar servicio':'Nuevo servicio';document.getElementById('sid').value=s?.id||'';document.getElementById('sname').value=s?.name||'';document.getElementById('sprice').value=s?.price??'';document.getElementById('sduration').value=s?.duration??60;document.getElementById('scat').value=s?.cat||'';document.getElementById('sdesc').value=s?.desc||'';document.getElementById('simg').value=s?.img||'';serviceDlg.showModal()}
-function saveService(e){e.preventDefault();const s={id:document.getElementById('sid').value||uid(),name:sname.value.trim(),price:+sprice.value,duration:+sduration.value||0,cat:scat.value.trim()||'General',desc:sdesc.value.trim(),img:simg.value.trim()};const i=services.findIndex(x=>x.id===s.id);if(i>=0)services[i]=s;else services.push(s);save(K.services,services);serviceDlg.close();toast('Servicio guardado');renderCurrent()}
-function deleteService(id){if(confirm('¿Eliminar este servicio?')){services=services.filter(x=>x.id!==id);save(K.services,services);renderCurrent()}}
-function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div><div class="actions"><button onclick="moveStock('${p.id}',1)">＋ Entrada</button><button onclick="moveStock('${p.id}',-1)">− Salida</button><button onclick="openProduct('${p.id}')">✎ Editar</button><button onclick="deleteProduct('${p.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
-function openProduct(id){const p=products.find(x=>x.id===id);productDlgTitle.textContent=p?'Editar producto':'Nuevo producto';pid.value=p?.id||'';pname.value=p?.name||'';pcat.value=p?.cat||'';pprice.value=p?.price??'';pqty.value=p?.qty??0;pmin.value=p?.min??1;productDlg.showModal()}
-function saveProduct(e){e.preventDefault();const p={id:pid.value||uid(),name:pname.value.trim(),cat:pcat.value.trim()||'General',price:+pprice.value,qty:+pqty.value,min:+pmin.value};const i=products.findIndex(x=>x.id===p.id);if(i>=0)products[i]=p;else products.push(p);save(K.products,products);productDlg.close();toast('Producto guardado');renderCurrent()}
-function deleteProduct(id){if(confirm('¿Eliminar este producto?')){products=products.filter(x=>x.id!==id);save(K.products,products);renderCurrent()}}function moveStock(id,dir){const p=products.find(x=>x.id===id),n=Number(prompt(dir>0?'Cantidad de entrada:':'Cantidad de salida:','1'));if(!n||n<=0)return;if(dir<0&&n>p.qty)return alert('No hay suficiente existencia.');p.qty+=dir*n;save(K.products,products);renderProducts();toast(dir>0?'Entrada registrada':'Salida registrada')}
-function renderClients(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=clients.filter(c=>(c.name+' '+c.phone+' '+c.note).toLowerCase().includes(q));clientsList.innerHTML=a.length?a.map(c=>`<div class="card client"><div class="row"><div class="grow"><b>${esc(c.name)}</b><div class="muted">${esc(c.phone||'Sin teléfono')}${c.birth?' · '+esc(c.birth):''}</div></div><span class="pill">${appts.filter(x=>x.clientId===c.id).length} citas</span></div><div class="muted" style="margin-top:8px">${esc(c.note||'Sin notas')}</div><div class="actions"><button onclick="openClient('${c.id}')">✎ Editar</button><button onclick="deleteClient('${c.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay clientes.</div>'}
-function openClient(id){const c=clients.find(x=>x.id===id);clientDlgTitle.textContent=c?'Editar cliente':'Nuevo cliente';cid.value=c?.id||'';cname.value=c?.name||'';cphone.value=c?.phone||'';cbirth.value=c?.birth||'';cnote.value=c?.note||'';clientDlg.showModal()}
-function saveClient(e){e.preventDefault();const c={id:cid.value||uid(),name:cname.value.trim(),phone:cphone.value.trim(),birth:cbirth.value,note:cnote.value.trim()};const i=clients.findIndex(x=>x.id===c.id);if(i>=0)clients[i]=c;else clients.push(c);save(K.clients,clients);clientDlg.close();toast('Cliente guardado');renderCurrent()}
-function deleteClient(id){if(confirm('¿Eliminar este cliente?')){clients=clients.filter(x=>x.id!==id);save(K.clients,clients);renderCurrent()}}
-function fillSelects(){aclient.innerHTML='<option value="">Selecciona un cliente</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');aservice.innerHTML='<option value="">Selecciona un servicio</option>'+services.map(s=>`<option value="${s.id}">${esc(s.name)} — ${money(s.price)}</option>`).join('');saleClient.innerHTML='<option value="">Sin cliente</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}
-function openAppointment(id){fillSelects();const a=appts.find(x=>x.id===id);apptDlgTitle.textContent=a?'Editar cita':'Nueva cita';aid.value=a?.id||'';aclient.value=a?.clientId||'';aservice.value=a?.serviceId||'';adate.value=a?.date||new Date().toISOString().slice(0,10);atime.value=a?.time||'10:00';astatus.value=a?.status||'Pendiente';anote.value=a?.note||'';apptDlg.showModal()}
-function saveAppointment(e){e.preventDefault();const a={id:aid.value||uid(),clientId:aclient.value,serviceId:aservice.value,date:adate.value,time:atime.value,status:astatus.value,note:anote.value.trim()};const i=appts.findIndex(x=>x.id===a.id);if(i>=0)appts[i]=a;else appts.push(a);save(K.appts,appts);apptDlg.close();toast('Cita guardada');renderCurrent()}
-function renderAppts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=[...appts].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)).filter(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return ((c?.name||'')+' '+(s?.name||'')+' '+x.status).toLowerCase().includes(q)});apptsList.innerHTML=a.length?a.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card appt"><div class="row"><div class="grow"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')}</div></div><span class="pill ${x.status==='Cancelada'?'danger':x.status==='Atendida'?'good':'warn'}">${esc(x.status)}</span></div><div style="margin-top:10px"><b>📅 ${esc(x.date)} · ${esc(x.time)}</b></div><div class="muted">${esc(x.note||'')}</div><div class="actions"><button onclick="openAppointment('${x.id}')">✎ Editar</button><button onclick="deleteAppt('${x.id}')" class="danger">🗑</button></div></div>`}).join(''):'<div class="empty">No hay citas.</div>'}
-function deleteAppt(id){if(confirm('¿Eliminar esta cita?')){appts=appts.filter(x=>x.id!==id);save(K.appts,appts);renderCurrent()}}
-function openSale(){fillSelects();saleConcept.value='';saleAmount.value='';saleType.value='Servicio';saleClient.value='';saleDlg.showModal()}
-function saveSale(e){e.preventDefault();sales.unshift({id:uid(),concept:saleConcept.value.trim(),type:saleType.value,amount:+saleAmount.value,clientId:saleClient.value,date:new Date().toISOString()});save(K.sales,sales);saleDlg.close();toast('Venta registrada');renderCurrent()}
-function renderSales(){const total=sales.reduce((a,x)=>a+x.amount,0),today=new Date().toISOString().slice(0,10);salesTotal.textContent=money(total);salesToday.textContent=money(sales.filter(x=>x.date.slice(0,10)===today).reduce((a,x)=>a+x.amount,0));const q=document.getElementById('globalSearch').value.toLowerCase();const a=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));salesList.innerHTML=a.length?a.map(x=>`<div class="card sale"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div><div class="actions"><button onclick="deleteSale('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay ventas.</div>'}
-function deleteSale(id){if(confirm('¿Eliminar esta venta?')){sales=sales.filter(x=>x.id!==id);save(K.sales,sales);renderCurrent()}}
-function openGallery(){gtitle.value='';gcat.value='';gimg.value='';gdesc.value='';galleryDlg.showModal()}function saveGallery(e){e.preventDefault();gallery.unshift({id:uid(),title:gtitle.value.trim(),cat:gcat.value.trim(),img:gimg.value.trim(),desc:gdesc.value.trim()});save(K.gallery,gallery);galleryDlg.close();toast('Diseño guardado');renderGallery()}
-function renderGallery(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=gallery.filter(x=>(x.title+' '+x.cat+' '+x.desc).toLowerCase().includes(q));galleryList.innerHTML=a.length?a.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div><div class="actions"><button onclick="deleteGallery('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>'}
-function deleteGallery(id){if(confirm('¿Eliminar este diseño?')){gallery=gallery.filter(x=>x.id!==id);save(K.gallery,gallery);renderGallery()}}
-function saveSettings(){settings={name:setName.value.trim()||'Tu Belleza',tagline:setTagline.value.trim()||'Salón de belleza',currency:setCurrency.value};save(K.settings,settings);appName.textContent=settings.name;tagline.textContent=settings.tagline;toast('Configuración guardada');renderCurrent()}
-function loadSettings(){setName.value=settings.name;setTagline.value=settings.tagline;setCurrency.value=settings.currency;appName.textContent=settings.name;tagline.textContent=settings.tagline}
-async function shareApp(){const data={title:settings.name,text:'Mira mi app Tu Belleza',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toast('Enlace copiado para compartir')}}catch(e){}}
-function backupData(){const data={services,products,clients,appts,sales,gallery,settings};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tu-belleza-respaldo.json';a.click();URL.revokeObjectURL(a.href);toast('Respaldo descargado')}
-function restoreData(){document.getElementById('importFile').click()}function doImport(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);services=d.services||[];products=d.products||[];clients=d.clients||[];appts=d.appts||[];sales=d.sales||[];gallery=d.gallery||[];settings=d.settings||settings;Object.entries({[K.services]:services,[K.products]:products,[K.clients]:clients,[K.appts]:appts,[K.sales]:sales,[K.gallery]:gallery,[K.settings]:settings}).forEach(([k,v])=>save(k,v));loadSettings();renderCurrent();toast('Respaldo importado')}catch(err){alert('El archivo no es un respaldo válido.')}};r.readAsText(f);e.target.value=''}
-function clearAll(){if(!confirm('Esto borrará servicios, inventario, clientes, citas, ventas y galería de ESTE dispositivo. ¿Continuar?'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));location.reload()}
-loadSettings();renderCurrent();
-</script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3').catch(()=>{}));</script>
-</body></html>
+// Base de datos local
+const K = {services:'tb_services_v3', products:'tu-belleza-products_v1', clients:'tb_clients_v3', appointments:'tb_appts_v3', sales:'tb_sales_v3', gallery:'tb_gallery_v1'};
+let services = load(K.services, []);
+let products = load(K.products, []);
+let clients = load(K.clients, []);
+let appointments = load(K.appointments, []);
+let sales = load(K.sales, []);
+let gallery = load(K.gallery, []);
+
+function load(k, def){const v=localStorage.getItem(k); return v ? JSON.parse(v) : def}
+function save(k, d){localStorage.setItem(k, JSON.stringify(d))}
+
+// Nombre del salón
+function saveShopName(){
+  const name = document.getElementById('shopNameInput').value.trim();
+  if(name){
+    document.getElementById('appName').textContent = name;
+    localStorage.setItem('shopName', name);
+    showToast('Nombre guardado ✅');
+  }
+}
+document.getElementById('shopNameInput').value = localStorage.getItem('shopName') || 'Tu Belleza';
+document.getElementById('appName').textContent = localStorage.getItem('shopName') || 'Tu Belleza';
+
+// Navegación
+let currentPage = 'home';
+function showPage(p, btn){
+  document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
+  document.getElementById(p).classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  currentPage = p;
+  renderCurrent();
+}
+
+function renderCurrent(){
+  if(currentPage === 'home') renderDashboard();
+  if(currentPage === 'services') renderServices();
+  if(currentPage === 'inventory') renderProducts();
+  if(currentPage === 'clients') renderClients();
+  if(currentPage === 'appointments') renderAppointments();
+  if(currentPage === 'gallery') renderGallery();
+}
+
+function renderDashboard(){
+  document.getElementById('dashServices').textContent = services.length;
+  document.getElementById('dashSales').textContent = sales.length;
+  document.querySelector('.q2').textContent = clients.length;
+}
+
+// SERVICIOS
+function openServiceDlg(id=null){
+  const dlg = document.getElementById('serviceDlg');
+  dlg.classList.remove('hidden');
+  document.getElementById('serviceDlgTitle').textContent = id ? 'Editar servicio' : 'Nuevo servicio';
+  dlg.dataset.id = id || '';
+  if(id){
+    const s = services.find(x=>x.id===id);
+    document.getElementById('serviceName').value = s.name;
+    document.getElementById('servicePrice').value = s.price;
+  } else {
+    document.getElementById('serviceName').value = '';
+    document.getElementById('servicePrice').value = '';
+  }
+}
+
+function saveService(e){
+  e.preventDefault();
+  const id = e.target.form.dataset.id || Date.now();
+  const name = document.getElementById('serviceName').value.trim();
+  const price = parseFloat(document.getElementById('servicePrice').value);
+  const fotoInput = document.getElementById('serviceFoto');
+  
+  const guardar = (fotoBase64 = null) => {
+    const nuevo = {id, name, price, foto: fotoBase64, createdAt: Date.now()};
+    const idx = services.findIndex(x=>x.id===id);
+    if(idx >= 0) services[idx] = nuevo;
+    else services.push(nuevo);
+    save(K.services, services);
+    closeDlg('serviceDlg');
+    renderServices();
+    showToast('Servicio guardado ✅');
+  };
+
+  if(fotoInput.files[0]){
+    const r = new FileReader();
+    r.onload = ev => guardar(ev.target.result);
+    r.readAsDataURL(fotoInput.files[0]);
+  } else {
+    guardar();
+  }
+}
+
+function renderServices(){
+  const list = document.getElementById('servicesList');
+  list.innerHTML = services.map(s => `
+    <div class="service" style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+      ${s.foto ? `<img src="${s.foto}" style="width:80px;height:80px;object-fit:cover;border-radius:8px">` : '<div style="width:80px;height:80px;background:#333;border-radius:8px;display:flex;align-items:center;justify-content:center">📷</div>'}
+      <div style="flex:1">
+        <h4 style="margin:0">${s.name}</h4>
+        <p style="margin:4px 0">$${s.price}</p>
+      </div>
+      <div>
+        <button onclick="openServiceDlg(${s.id})" style="background:none;color:#ffd700;padding:4px">✏️</button>
+        <button onclick="deleteService(${s.id})" style="background:none;color:#ff6b6b;padding:4px">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteService(id){
+  if(confirm('¿Eliminar este servicio?')){
+    services = services.filter(x=>x.id!==id);
+    save(K.services, services);
+    renderServices();
+    showToast('Servicio eliminado');
+  }
+}
+
+// PRODUCTOS
+function openProductDlg(id=null){
+  const dlg = document.getElementById('productDlg');
+  dlg.classList.remove('hidden');
+  document.getElementById('productDlgTitle').textContent = id ? 'Editar producto' : 'Nuevo producto';
+  dlg.dataset.id = id || '';
+  if(id){
+    const p = products.find(x=>x.id===id);
+    document.getElementById('productName').value = p.name;
+    document.getElementById('productPrice').value = p.price;
+    document.getElementById('productStock').value = p.stock;
+  } else {
+    document.getElementById('productName').value = '';
+    document.getElementById('productPrice').value = '';
+    document.getElementById('productStock').value = '';
+  }
+}
+
+function saveProduct(e){
+  e.preventDefault();
+  const id = e.target.form.dataset.id || Date.now();
+  const name = document.getElementById('productName').value.trim();
+  const price = parseFloat(document.getElementById('productPrice').value);
+  const stock = parseInt(document.getElementById('productStock').value);
+  const fotoInput = document.getElementById('productFoto');
+  
+  const guardar = (fotoBase64=null) => {
+    const nuevo = {id, name, price, stock, foto: fotoBase64, createdAt: Date.now()};
+    const idx = products.findIndex(x=>x.id===id);
+    if(idx >= 0) products[idx] = nuevo;
+    else products.push(nuevo);
+    save(K.products, products);
+    closeDlg('productDlg');
+    renderProducts();
+    showToast('Producto guardado ✅');
+  };
+
+  if(fotoInput.files[0]){
+    const r = new FileReader();
+    r.onload = ev => guardar(ev.target.result);
+    r.readAsDataURL(fotoInput.files[0]);
+  } else {
+    guardar();
+  }
+}
+
+function renderProducts(){
+  const list = document.getElementById('inventoryList');
+  list.innerHTML = products.map(p => `
+    <div class="product" style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+      ${p.foto ? `<img src="${p.foto}" style="width:80px;height:80px;object-fit:cover;border-radius:8px">` : '<div style="width:80px;height:80px;background:#333;border-radius:8px;display:flex;align-items:center;justify-content:center">📷</div>'}
+      <div style="flex:1">
+        <h4 style="margin:0">${p.name}</h4>
+        <p style="margin:4px 0">$${p.price} | Stock: ${p.stock}</p>
+      </div>
+      <div>
+        <button onclick="openProductDlg(${p.id})" style="background:none;color:#ffd700;padding:4px">✏️</button>
+        <button onclick="deleteProduct(${p.id})" style="background:none;color:#ff6b6b;padding:4px">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteProduct(id){
+  if(confirm('¿Eliminar este producto?')){
+    products = products.filter(x=>x.id!==id);
+    save(K.products, products);
+    renderProducts();
+    showToast('Producto eliminado');
+  }
+}
+
+// CLIENTES
+function openClientDlg(id=null){
+  const dlg = document.getElementById('clientDlg');
+  dlg.classList.remove('hidden');
+  document.getElementById('clientDlgTitle').textContent = id ? 'Editar cliente' : 'Nuevo cliente';
+  dlg.dataset.id = id || '';
+  if(id){
+    const c = clients.find(x=>x.id===id);
+    document.getElementById('clientName').value = c.name;
+    document.getElementById('clientPhone').value = c.phone || '';
+    document.getElementById('clientEmail').value = c.email || '';
+  } else {
+    document.getElementById('clientName').value = '';
+    document.getElementById('clientPhone').value = '';
+    document.getElementById('clientEmail').value = '';
+  }
+}
+
+function saveClient(e){
+  e.preventDefault();
+  const id = e.target.form.dataset.id || Date.now();
+  const name = document.getElementById('clientName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  const fotoInput = document.getElementById('clientFoto');
+  
+  const guardar = (fotoBase64=null) => {
+    const nuevo = {id, name, phone, email, foto: fotoBase64, createdAt: Date.now()};
+    const idx = clients.findIndex(x=>x.id===id);
+    if(idx >= 0) clients[idx] = nuevo;
+    else clients.push(nuevo);
+    save(K.clients, clients);
+    closeDlg('clientDlg');
+    renderClients();
+    showToast('Cliente guardado ✅');
+  };
+
+  if(fotoInput.files[0]){
+    const r = new FileReader();
+    r.onload = ev => guardar(ev.target.result);
+    r.readAsDataURL(fotoInput.files[0]);
+  } else {
+    guardar();
+  }
+}
+
+function renderClients(){
+  const list = document.getElementById('clientsList');
+  list.innerHTML = clients.map(c => `
+    <div class="client" style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+      ${c.foto ? `<img src="${c.foto}" style="width:80px;height:80px;object-fit:cover;border-radius:50%">` : '<div style="width:80px;height:80px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div>'}
+      <div style="flex:1">
+        <h4 style="margin:0">${c.name}</h4>
+        <p style="margin:4px 0">${c.phone || 'Sin teléfono'}</p>
+      </div>
+      <div>
+        <button onclick="openClientDlg(${c.id})" style="background:none;color:#ffd700;padding:4px">✏️</button>
+        <button onclick="deleteClient(${c.id})" style="background:none;color:#ff6b6b;padding:4px">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteClient(id){
+  if(confirm('¿Eliminar este cliente?')){
+    clients = clients.filter(x=>x.id!==id);
+    save(K.clients, clients);
+    renderClients();
+    showToast('Cliente eliminado');
+  }
+}
+
+// CITAS
+function openAppointmentDlg(id=null){
+  const dlg = document.getElementById('appointmentDlg');
+  dlg.classList.remove('hidden');
+  document.getElementById('appDlgTitle').textContent = id ? 'Editar cita' : 'Nueva cita';
+  dlg.dataset.id = id || '';
+  if(id){
+    const a = appointments.find(x=>x.id===id);
+    document.getElementById('appClientName').value = a.clientName;
+    document.getElementById('appDate').value = a.date;
+    document.getElementById('appTime').value = a.time;
+    document.getElementById('appService').value = a.service || '';
+  } else {
+    document.getElementById('appClientName').value = '';
+    document.getElementById('appDate').value = '';
+    document.getElementById('appTime').value = '';
+    document.getElementById('appService').value = '';
+  }
+}
+
+function saveAppointment(e){
+  e.preventDefault();
+  const id = e.target.form.dataset.id || Date.now();
+  const clientName = document.getElementById('appClientName').value.trim();
+  const date = document.getElementById('appDate').value;
+  const time = document.getElementById('appTime').value;
+  const service = document.getElementById('appService').value.trim();
+  
+  const nuevo = {id, clientName, date, time, service, createdAt: Date.now()};
+  const idx = appointments.findIndex(x=>x.id===id);
+  if(idx >= 0) appointments[idx] = nuevo;
+  else appointments.push(nuevo);
+  save(K.appointments, appointments);
+  closeDlg('appointmentDlg');
+  renderAppointments();
+  showToast('Cita guardada ✅');
+}
+
+function renderAppointments(){
+  const list = document.getElementById('appointmentsList');
+  list.innerHTML = appointments.map(a => `
+    <div class="appointment" style="margin-bottom:12px;padding:12px;border-radius:12px;background:#25202f">
+      <h4 style="margin:0 0 8px 0">${a.clientName}</h4>
+      <p style="margin:4px 0">📅 ${a.date} ⏰ ${a.time}</p>
+      <p style="margin:4px 0">💇 ${a.service || 'Servicio sin especificar'}</p>
+    </div>
+  `).join('');
+}
+
+// GALERÍA
+function openGalleryDlg(){
+  document.getElementById('galleryDlg').classList.remove('hidden');
+  document.getElementById('galleryFoto').value = '';
+  document.getElementById('galleryDesc').value = '';
+}
+
+function saveGallery(e){
+  e.preventDefault();
+  const fotoInput = document.getElementById('galleryFoto');
+  const desc = document.getElementById('galleryDesc').value.trim();
+  
+  if(!fotoInput.files[0]) return alert('Selecciona una foto');
+  
+  const r = new FileReader();
+  r.onload = ev => {
+    gallery.unshift({
+      id: Date.now(),
+      foto: ev.target.result,
+      desc,
+      createdAt: Date.now()
+    });
+    save(K.gallery, gallery);
+    closeDlg('galleryDlg');
+    renderGallery();
+    showToast('Foto subida ✅');
+  };
+  r.readAsDataURL(fotoInput.files[0]);
+}
+
+function renderGallery(){
+  const list = document.getElementById('galleryList');
+  list.innerHTML = gallery.map(g => `
+    <div style="position:relative;border-radius:12px;overflow:hidden;background:#222">
+      <img src="${g.foto}" style="width:100%;aspect-ratio:1/1;object-fit:cover">
+      ${g.desc ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.7);padding:8px;font-size:13px">${g.desc}</div>` : ''}
+      <button onclick="deleteGalleryPhoto(${g.id})" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.5);color:#fff;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center">🗑️</button>
+    </div>
+  `).join('');
+}
+
+function deleteGalleryPhoto(id){
+  if(confirm('¿Eliminar esta foto?')){
+    gallery = gallery.filter(x=>x.id!==id);
+    save(K.gallery, gallery);
+    renderGallery();
+    showToast('Foto eliminada');
+  }
+}
+
+// UTILIDADES
+function closeDlg(id){
+  document.getElementById(id).classList.add('hidden');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  setTimeout(()=>t.classList.add('hidden'), 2500);
+}
+
+// Cerrar diálogos al hacer clic fuera
+document.addEventListener('click', e => {
+  if(e.target.classList.contains('dlg')) e.target.classList.add('hidden');
+});
+
+// Carga inicial
+renderCurrent();
+</script>
+</body>
+</html>
