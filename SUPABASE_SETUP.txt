@@ -1,0 +1,69 @@
+TU BELLEZA - CUENTA Y SINCRONIZACIÓN
+
+1. Crea un proyecto en Supabase.
+2. En Project Settings > API copia:
+   - Project URL
+   - Publishable key (o la anon key si tu proyecto todavía la muestra con ese nombre).
+3. Abre supabase-config.js y pega esos dos valores:
+   window.SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+   window.SUPABASE_KEY = 'TU_CLAVE_PUBLICABLE';
+
+NO uses la service_role key en una página web.
+
+4. En Supabase abre SQL Editor y ejecuta TODO esto:
+
+create table if not exists public.tu_belleza_data (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  data_key text not null,
+  data_value jsonb not null,
+  updated_at timestamptz not null default now(),
+  primary key (user_id, data_key)
+);
+
+alter table public.tu_belleza_data enable row level security;
+
+create policy "Tu Belleza: leer propios datos"
+on public.tu_belleza_data
+for select
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "Tu Belleza: crear propios datos"
+on public.tu_belleza_data
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create policy "Tu Belleza: modificar propios datos"
+on public.tu_belleza_data
+for update
+to authenticated
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+create policy "Tu Belleza: borrar propios datos"
+on public.tu_belleza_data
+for delete
+to authenticated
+using (auth.uid() = user_id);
+
+5. Sube los archivos de esta versión a GitHub Pages.
+6. En Tu Belleza entra a Administrar > Cuenta y sincronización.
+7. Crea tu cuenta e inicia sesión.
+8. Usa ESA MISMA cuenta en el teléfono y en la tablet.
+
+INVENTARIO
+
+La pestaña Inventario ahora es solamente para consultar y descontar productos vendidos.
+Cada producto tendrá el botón:
+  − Producto vendido
+
+La creación, edición y eliminación de productos queda en Administrar.
+
+NOTA SOBRE FOTOS
+
+Las fotos seleccionadas desde la galería se guardan dentro de los datos sincronizados. Conviene usar fotos reducidas; Tu Belleza ya intenta reducirlas antes de guardarlas.
+
+SEGURIDAD
+
+La clave publicable/anon puede estar en el frontend cuando las tablas están protegidas con RLS. Nunca pongas una service_role key en GitHub Pages.
