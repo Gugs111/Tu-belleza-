@@ -129,7 +129,7 @@ img, svg {
 <dialog id="productDlg"><form onsubmit="saveProduct(event)"><div class="dlghead"><h3 id="productDlgTitle">Nuevo producto</h3></div><div class="dlgbody"><input type="hidden" id="pid"><label>Nombre *</label><input id="pname" required><div class="formgrid"><div><label>Categoría</label><input id="pcat"></div><div><label>Precio *</label><input id="pprice" type="number" step="0.01" min="0" required></div><div><label>Existencia *</label><input id="pqty" type="number" step="0.01" min="0" required></div><div><label>Stock mínimo</label><input id="pmin" type="number" step="0.01" min="0" value="1"></div></div></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="productDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
 <dialog id="clientDlg"><form onsubmit="saveClient(event)"><div class="dlghead"><h3 id="clientDlgTitle">Nuevo cliente</h3></div><div class="dlgbody"><input type="hidden" id="cid"><label>Nombre *</label><input id="cname" required><div class="formgrid"><div><label>Teléfono</label><input id="cphone" inputmode="tel"></div><div><label>Fecha de nacimiento</label><input id="cbirth" type="date"></div></div><label>Notas</label><textarea id="cnote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="clientDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
 <dialog id="apptDlg"><form onsubmit="saveAppointment(event)"><div class="dlghead"><h3 id="apptDlgTitle">Nueva cita</h3></div><div class="dlgbody"><input type="hidden" id="aid"><label>Cliente *</label><select id="aclient" required></select><label>Servicio *</label><select id="aservice" required></select><div class="formgrid"><div><label>Fecha *</label><input id="adate" type="date" required></div><div><label>Hora *</label><input id="atime" type="time" required></div></div><label>Estado</label><select id="astatus"><option>Pendiente</option><option>Confirmada</option><option>Atendida</option><option>Cancelada</option></select><label>Notas</label><textarea id="anote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="apptDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
-<dialog id="saleDlg"><form onsubmit="saveSale(event)"><div class="dlghead"><h3>Nueva venta</h3></div><div class="dlgbody"><label>Concepto *</label><input id="saleConcept" required placeholder="Corte, tinte, producto..."><div class="formgrid"><div><label>Tipo</label><select id="saleType"><option>Servicio</option><option>Producto</option><option>Otro</option></select></div><div><label>Total *</label><input id="saleAmount" type="number" step="0.01" min="0" required></div></div><label>Cliente</label><select id="saleClient"><option value="">Sin cliente</option></select></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="saleDlg.close()">Cancelar</button><button class="btn">Guardar venta</button></div></form></dialog>
+<dialog id="saleDlg"><form onsubmit="saveSale(event)"><div class="dlghead"><h3 id="saleDlgTitle">Nueva venta</h3></div><div class="dlgbody"><input type="hidden" id="saleId"><label>Concepto *</label><input id="saleConcept" required placeholder="Corte, tinte, producto..."><div class="formgrid"><div><label>Tipo</label><select id="saleType"><option>Servicio</option><option>Producto</option><option>Otro</option></select></div><div><label>Total *</label><input id="saleAmount" type="number" step="0.01" min="0" required></div></div><div class="formgrid"><div><label>Cliente</label><select id="saleClient"><option value="">Sin cliente</option></select></div><div><label>Fecha</label><input id="saleDate" type="date"></div></div></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="saleDlg.close()">Cancelar</button><button class="btn">Guardar venta</button></div></form></dialog>
 <dialog id="galleryDlg"><form onsubmit="saveGallery(event)"><div class="dlghead"><h3 id="galleryDlgTitle">Nuevo diseño</h3></div><div class="dlgbody">
 <input type="hidden" id="gid">
 <label>Título *</label><input id="gtitle" required>
@@ -220,7 +220,21 @@ function deleteService(id){if(confirm('¿Eliminar este servicio?')){services=ser
 function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div><div class="actions"><button class="btn" onclick="moveStock('${p.id}',-1)">− Quitar vendido</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
 function openProduct(id){const p=products.find(x=>x.id===id);productDlgTitle.textContent=p?'Editar producto':'Nuevo producto';pid.value=p?.id||'';pname.value=p?.name||'';pcat.value=p?.cat||'';pprice.value=p?.price??'';pqty.value=p?.qty??0;pmin.value=p?.min??1;productDlg.showModal()}
 function saveProduct(e){e.preventDefault();const p={id:pid.value||uid(),name:pname.value.trim(),cat:pcat.value.trim()||'General',price:+pprice.value,qty:+pqty.value,min:+pmin.value};const i=products.findIndex(x=>x.id===p.id);if(i>=0)products[i]=p;else products.push(p);save(K.products,products);productDlg.close();toast('Producto guardado');renderCurrent()}
-function deleteProduct(id){if(confirm('¿Eliminar este producto?')){products=products.filter(x=>x.id!==id);save(K.products,products);renderCurrent()}}function moveStock(id,dir){const p=products.find(x=>x.id===id);if(!p)return;const n=Number(prompt(dir>0?'Cantidad de entrada:':'¿Cuántas unidades se vendieron de '+p.name+'?','1'));if(!Number.isFinite(n)||n<=0)return;if(dir<0&&n>p.qty)return alert('No hay suficiente existencia.');if(dir<0&&!confirm('¿Descontar '+n+' unidad(es) de '+p.name+' como vendidas?'))return;p.qty += dir*n;save(K.products,products);renderProducts();renderAdmin();toast(dir>0?'Entrada registrada':'Producto vendido')}
+function deleteProduct(id){if(confirm('¿Eliminar este producto?')){products=products.filter(x=>x.id!==id);save(K.products,products);renderCurrent()}}
+function moveStock(id,dir){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  if(dir<0){
+    if(Number(p.qty||0)<=0)return alert('No hay existencias para vender.');
+    p.qty=Number(p.qty||0)-1;
+    sales.unshift({id:uid(),concept:p.name,type:'Producto',amount:Number(p.price||0),clientId:'',date:new Date().toISOString()});
+    save(K.products,products);save(K.sales,sales);
+    toast('✓ Vendido: '+p.name+' — '+money(p.price));
+  }else{
+    const n=Number(prompt('Cantidad de entrada:','1'));if(!Number.isFinite(n)||n<=0)return;
+    p.qty=Number(p.qty||0)+n;save(K.products,products);toast('Entrada registrada');
+  }
+  renderCurrent();
+}
 function renderClients(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=clients.filter(c=>(c.name+' '+c.phone+' '+c.note).toLowerCase().includes(q));clientsList.innerHTML=a.length?a.map(c=>`<div class="card client"><div class="row"><div class="grow"><b>${esc(c.name)}</b><div class="muted">${esc(c.phone||'Sin teléfono')}${c.birth?' · '+esc(c.birth):''}</div></div><span class="pill">${appts.filter(x=>x.clientId===c.id).length} citas</span></div><div class="muted" style="margin-top:8px">${esc(c.note||'Sin notas')}</div></div>`).join(''):'<div class="empty">No hay clientes.</div>'}
 function openClient(id){const c=clients.find(x=>x.id===id);clientDlgTitle.textContent=c?'Editar cliente':'Nuevo cliente';cid.value=c?.id||'';cname.value=c?.name||'';cphone.value=c?.phone||'';cbirth.value=c?.birth||'';cnote.value=c?.note||'';clientDlg.showModal()}
 function saveClient(e){e.preventDefault();const c={id:cid.value||uid(),name:cname.value.trim(),phone:cphone.value.trim(),birth:cbirth.value,note:cnote.value.trim()};const i=clients.findIndex(x=>x.id===c.id);if(i>=0)clients[i]=c;else clients.push(c);save(K.clients,clients);clientDlg.close();toast('Cliente guardado');renderCurrent()}
@@ -230,8 +244,29 @@ function openAppointment(id){fillSelects();const a=appts.find(x=>x.id===id);appt
 function saveAppointment(e){e.preventDefault();const a={id:aid.value||uid(),clientId:aclient.value,serviceId:aservice.value,date:adate.value,time:atime.value,status:astatus.value,note:anote.value.trim()};const i=appts.findIndex(x=>x.id===a.id);if(i>=0)appts[i]=a;else appts.push(a);save(K.appts,appts);apptDlg.close();toast('Cita guardada');renderCurrent()}
 function renderAppts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=[...appts].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)).filter(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return ((c?.name||'')+' '+(s?.name||'')+' '+x.status).toLowerCase().includes(q)});apptsList.innerHTML=a.length?a.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card appt"><div class="row"><div class="grow"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')}</div></div><span class="pill ${x.status==='Cancelada'?'danger':x.status==='Atendida'?'good':'warn'}">${esc(x.status)}</span></div><div style="margin-top:10px"><b>📅 ${esc(x.date)} · ${esc(x.time)}</b></div><div class="muted">${esc(x.note||'')}</div></div>`}).join(''):'<div class="empty">No hay citas.</div>'}
 function deleteAppt(id){if(confirm('¿Eliminar esta cita?')){appts=appts.filter(x=>x.id!==id);save(K.appts,appts);renderCurrent()}}
-function openSale(){fillSelects();saleConcept.value='';saleAmount.value='';saleType.value='Servicio';saleClient.value='';saleDlg.showModal()}
-function saveSale(e){e.preventDefault();sales.unshift({id:uid(),concept:saleConcept.value.trim(),type:saleType.value,amount:+saleAmount.value,clientId:saleClient.value,date:new Date().toISOString()});save(K.sales,sales);saleDlg.close();toast('Venta registrada');renderCurrent()}
+function openSale(id){
+  fillSelects();
+  const x=sales.find(s=>s.id===id);
+  saleDlgTitle.textContent=x?'Editar venta':'Nueva venta';
+  saleId.value=x?.id||'';
+  saleConcept.value=x?.concept||'';
+  saleAmount.value=x?.amount??'';
+  saleType.value=x?.type||'Servicio';
+  saleClient.value=x?.clientId||'';
+  saleDate.value=x?.date?.slice(0,10)||new Date().toISOString().slice(0,10);
+  saleDlg.showModal();
+}
+function saveSale(e){
+  e.preventDefault();
+  const id=saleId.value||uid();
+  const old=sales.find(x=>x.id===id);
+  const d=saleDate.value||new Date().toISOString().slice(0,10);
+  const date=old?.date&&old.date.slice(0,10)===d?old.date:new Date(d+'T12:00:00').toISOString();
+  const sale={id,concept:saleConcept.value.trim(),type:saleType.value,amount:+saleAmount.value,clientId:saleClient.value,date};
+  const i=sales.findIndex(x=>x.id===id);
+  if(i>=0)sales[i]=sale;else sales.unshift(sale);
+  save(K.sales,sales);saleDlg.close();toast(old?'Venta modificada':'Venta registrada');renderCurrent();
+}
 function renderSales(){const total=sales.reduce((a,x)=>a+x.amount,0),today=new Date().toISOString().slice(0,10);salesTotal.textContent=money(total);salesToday.textContent=money(sales.filter(x=>x.date.slice(0,10)===today).reduce((a,x)=>a+x.amount,0));const q=document.getElementById('globalSearch').value.toLowerCase();const a=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));salesList.innerHTML=a.length?a.map(x=>`<div class="card sale"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div></div>`).join(''):'<div class="empty">No hay ventas.</div>'}
 function deleteSale(id){if(confirm('¿Eliminar esta venta?')){sales=sales.filter(x=>x.id!==id);save(K.sales,sales);renderCurrent()}}
 let galleryPendingImage='';
@@ -334,7 +369,7 @@ function renderAdmin(){
   adminAppts.innerHTML=as.length?as.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')} · ${esc(x.date)} · ${esc(x.time)} · ${esc(x.status)}</div><div class="actions"><button onclick="openAppointment('${x.id}')">✎ Editar</button><button onclick="deleteAppt('${x.id}')" class="danger">🗑</button></div></div>`}).join(''):'<div class="empty">No hay citas.</div>';
 
   const sl=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));
-  adminSales.innerHTML=sl.length?sl.map(x=>`<div class="card"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div><div class="actions"><button onclick="deleteSale('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay ventas.</div>';
+  adminSales.innerHTML=sl.length?sl.map(x=>`<div class="card"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div><div class="actions"><button onclick="openSale('${x.id}')">✎ Editar</button><button onclick="deleteSale('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay ventas.</div>';
 
   const gs=gallery.filter(x=>(x.title+' '+x.cat+' '+x.desc).toLowerCase().includes(q));
   adminGallery.innerHTML=gs.length?gs.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div><div class="actions"><button onclick="openGallery('${x.id}')">✎ Editar</button><button onclick="deleteGallery('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>';
@@ -349,7 +384,7 @@ function backupData(){const data={services,products,clients,appts,sales,gallery,
 function restoreData(){document.getElementById('importFile').click()}function doImport(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);services=d.services||[];products=d.products||[];clients=d.clients||[];appts=d.appts||[];sales=d.sales||[];gallery=d.gallery||[];settings=d.settings||settings;Object.entries({[K.services]:services,[K.products]:products,[K.clients]:clients,[K.appts]:appts,[K.sales]:sales,[K.gallery]:gallery,[K.settings]:settings}).forEach(([k,v])=>save(k,v));loadSettings();renderCurrent();initCloud();toast('Respaldo importado')}catch(err){alert('El archivo no es un respaldo válido.')}};r.readAsText(f);e.target.value=''}
 function clearAll(){if(!confirm('Esto borrará servicios, inventario, clientes, citas, ventas y galería de ESTE dispositivo. ¿Continuar?'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));location.reload()}
 loadSettings();renderCurrent();initCloud();
-</script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=10').catch(()=>{}));</script>
+</script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=11').catch(()=>{}));</script>
 
 <script>
 (function () {
