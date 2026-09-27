@@ -35,19 +35,56 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
   <div class="card hero"><h2>¡Bienvenida a Tu Belleza! ✨</h2><p>Administra servicios, inventario, ventas, clientes y citas desde tu celular.</p></div>
   <div class="stat" style="margin-top:10px"><div class="card"><b id="dashSales">Q0</b>Ventas</div><div class="card"><b id="dashAppts">0</b>Citas</div><div class="card"><b id="dashClients">0</b>Clientes</div><div class="card"><b id="dashLow">0</b>Bajo stock</div></div>
   <div class="sectiontitle"><h2>Accesos rápidos</h2></div>
-  <div class="quick"><button class="q1" onclick="openService()">✂️<br>Nuevo servicio</button><button class="q2" onclick="openProduct()">📦<br>Producto</button><button class="q3" onclick="openClient()">👥<br>Cliente</button><button class="q4" onclick="openAppointment()">📅<br>Cita</button><button class="q5" onclick="openSale()">🛒<br>Venta</button><button class="q6" onclick="showPage('gallery')">🖼️<br>Galería</button></div>
+  <div class="quick"><button class="q1" onclick="goAdmin('service')">✂️<br>Nuevo servicio</button><button class="q2" onclick="goAdmin('product')">📦<br>Producto</button><button class="q3" onclick="goAdmin('client')">👥<br>Cliente</button><button class="q4" onclick="goAdmin('appointment')">📅<br>Cita</button><button class="q5" onclick="goAdmin('sale')">🛒<br>Venta</button><button class="q6" onclick="showPage('gallery')">🖼️<br>Galería</button></div>
   <div class="sectiontitle"><h2>Servicios destacados</h2><button class="btn dark" onclick="showPage('services')">Ver todos</button></div><div id="homeServices"></div>
 </section>
-<section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Agrega y modifica tus servicios y precios.</p></div><button class="btn" onclick="openService()">+ Servicio</button></div><div id="servicesList"></div></section>
-<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Entradas, salidas y alertas de stock.</p></div><button class="btn" onclick="openProduct()">+ Producto</button></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
-<section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Registra ventas de servicios o productos.</p></div><button class="btn" onclick="openSale()">+ Venta</button></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
-<section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Datos e historial básico de tus clientas.</p></div><button class="btn" onclick="openClient()">+ Cliente</button></div><div id="clientsList"></div></section>
-<section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Agenda y consulta las citas.</p></div><button class="btn" onclick="openAppointment()">+ Cita</button></div><div id="apptsList"></div></section>
-<section id="gallery" class="page hidden"><div class="sectiontitle"><div><h2>🖼️ Galería</h2><p>Guarda ejemplos de tus trabajos.</p></div><button class="btn" onclick="openGallery()">+ Diseño</button></div><div id="galleryList" class="gallery"></div></section>
-<section id="settings" class="page hidden"><div class="sectiontitle"><div><h2>⚙️ Configuración</h2><p>Personaliza la app desde aquí.</p></div></div><div class="card"><label>Nombre del salón</label><input id="setName"><label>Descripción</label><input id="setTagline"><label>Moneda</label><select id="setCurrency"><option>Q</option><option>$</option><option>€</option></select><button class="btn" onclick="saveSettings()">Guardar configuración</button></div><div class="card"><h3>📲 Compartir app</h3><p class="muted">Comparte el enlace de tu app con WhatsApp u otra aplicación.</p><button class="btn gold" onclick="shareApp()">Compartir Tu Belleza</button></div><div class="card dangerbox"><h3>⚠️ Datos de este dispositivo</h3><p class="muted">La información se guarda localmente en este dispositivo. Borrar datos no afecta a otros teléfonos.</p><button class="btn dark" onclick="backupData()">Exportar respaldo</button><button class="btn dark" onclick="restoreData()">Importar respaldo</button><button class="btn" style="background:#ff9a9a" onclick="clearAll()">Borrar todos los datos</button></div></section>
+<section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Agrega y modifica tus servicios y precios.</p></div></div><div id="servicesList"></div></section>
+<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Entradas, salidas y alertas de stock.</p></div></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
+<section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Registra ventas de servicios o productos.</p></div></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
+<section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Datos e historial básico de tus clientas.</p></div></div><div id="clientsList"></div></section>
+<section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Agenda y consulta las citas.</p></div></div><div id="apptsList"></div></section>
+<section id="gallery" class="page hidden"><div class="sectiontitle"><div><h2>🖼️ Galería</h2><p>Guarda ejemplos de tus trabajos.</p></div></div><div id="galleryList" class="gallery"></div></section>
+<section id="settings" class="page hidden">
+  <div class="sectiontitle"><div><h2>⚙️ Administrar</h2><p>Aquí puedes modificar todo. Las demás pestañas son para consultar.</p></div></div>
+  <div class="card hero"><h2>Centro de administración</h2><p>Agrega, edita o elimina servicios, productos, clientes, citas, ventas y diseños desde esta única pestaña.</p></div>
+
+  <div class="sectiontitle"><h2>✂️ Servicios</h2><button class="btn" onclick="openService()">+ Servicio</button></div>
+  <div id="adminServices"></div>
+
+  <div class="sectiontitle"><h2>📦 Inventario</h2><button class="btn" onclick="openProduct()">+ Producto</button></div>
+  <div id="adminProducts"></div>
+
+  <div class="sectiontitle"><h2>👥 Clientes</h2><button class="btn" onclick="openClient()">+ Cliente</button></div>
+  <div id="adminClients"></div>
+
+  <div class="sectiontitle"><h2>📅 Citas</h2><button class="btn" onclick="openAppointment()">+ Cita</button></div>
+  <div id="adminAppts"></div>
+
+  <div class="sectiontitle"><h2>🛒 Ventas</h2><button class="btn" onclick="openSale()">+ Venta</button></div>
+  <div id="adminSales"></div>
+
+  <div class="sectiontitle"><h2>🖼️ Galería</h2><button class="btn" onclick="openGallery()">+ Diseño</button></div>
+  <div id="adminGallery" class="gallery"></div>
+
+  <div class="sectiontitle"><h2>🏠 Información del salón</h2></div>
+  <div class="card">
+    <label>Nombre del salón</label><input id="setName">
+    <label>Descripción</label><input id="setTagline">
+    <label>Moneda</label><select id="setCurrency"><option>Q</option><option>$</option><option>€</option></select>
+    <button class="btn" onclick="saveSettings()">Guardar configuración</button>
+  </div>
+
+  <div class="card"><h3>📲 Compartir app</h3><p class="muted">Comparte el enlace de tu app con WhatsApp u otra aplicación.</p><button class="btn gold" onclick="shareApp()">Compartir Tu Belleza</button></div>
+
+  <div class="card dangerbox"><h3>💾 Respaldo</h3><p class="muted">La información se guarda localmente en este dispositivo.</p>
+    <button class="btn dark" onclick="backupData()">Exportar respaldo</button>
+    <button class="btn dark" onclick="restoreData()">Importar respaldo</button>
+    <button class="btn" style="background:#ff9a9a" onclick="clearAll()">Borrar todos los datos</button>
+  </div>
+</section>
 </main>
 <nav>
-<button data-page="home" class="active" onclick="showPage('home',this)">⌂<br>Inicio</button><button data-page="services" onclick="showPage('services',this)">✂<br>Servicios</button><button data-page="appointments" onclick="showPage('appointments',this)">📅<br>Citas</button><button data-page="inventory" onclick="showPage('inventory',this)">📦<br>Inventario</button><button data-page="clients" onclick="showPage('clients',this)">👥<br>Clientes</button><button data-page="settings" onclick="showPage('settings',this)">⚙<br>Más</button>
+<button data-page="home" class="active" onclick="showPage('home',this)">⌂<br>Inicio</button><button data-page="services" onclick="showPage('services',this)">✂<br>Servicios</button><button data-page="appointments" onclick="showPage('appointments',this)">📅<br>Citas</button><button data-page="inventory" onclick="showPage('inventory',this)">📦<br>Inventario</button><button data-page="clients" onclick="showPage('clients',this)">👥<br>Clientes</button><button data-page="settings" onclick="showPage('settings',this)">⚙<br>Administrar</button>
 </nav>
 <div id="toast" class="toast hidden"></div>
 
@@ -56,7 +93,16 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
 <dialog id="clientDlg"><form onsubmit="saveClient(event)"><div class="dlghead"><h3 id="clientDlgTitle">Nuevo cliente</h3></div><div class="dlgbody"><input type="hidden" id="cid"><label>Nombre *</label><input id="cname" required><div class="formgrid"><div><label>Teléfono</label><input id="cphone" inputmode="tel"></div><div><label>Fecha de nacimiento</label><input id="cbirth" type="date"></div></div><label>Notas</label><textarea id="cnote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="clientDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
 <dialog id="apptDlg"><form onsubmit="saveAppointment(event)"><div class="dlghead"><h3 id="apptDlgTitle">Nueva cita</h3></div><div class="dlgbody"><input type="hidden" id="aid"><label>Cliente *</label><select id="aclient" required></select><label>Servicio *</label><select id="aservice" required></select><div class="formgrid"><div><label>Fecha *</label><input id="adate" type="date" required></div><div><label>Hora *</label><input id="atime" type="time" required></div></div><label>Estado</label><select id="astatus"><option>Pendiente</option><option>Confirmada</option><option>Atendida</option><option>Cancelada</option></select><label>Notas</label><textarea id="anote"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="apptDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
 <dialog id="saleDlg"><form onsubmit="saveSale(event)"><div class="dlghead"><h3>Nueva venta</h3></div><div class="dlgbody"><label>Concepto *</label><input id="saleConcept" required placeholder="Corte, tinte, producto..."><div class="formgrid"><div><label>Tipo</label><select id="saleType"><option>Servicio</option><option>Producto</option><option>Otro</option></select></div><div><label>Total *</label><input id="saleAmount" type="number" step="0.01" min="0" required></div></div><label>Cliente</label><select id="saleClient"><option value="">Sin cliente</option></select></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="saleDlg.close()">Cancelar</button><button class="btn">Guardar venta</button></div></form></dialog>
-<dialog id="galleryDlg"><form onsubmit="saveGallery(event)"><div class="dlghead"><h3>Nuevo diseño</h3></div><div class="dlgbody"><label>Título *</label><input id="gtitle" required><label>Categoría</label><input id="gcat" placeholder="Uñas, cabello, maquillaje..."><label>Imagen (URL)</label><input id="gimg" placeholder="https://..."><label>Descripción</label><textarea id="gdesc"></textarea></div><div class="dlgfoot"><button type="button" class="btn dark" onclick="galleryDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
+<dialog id="galleryDlg"><form onsubmit="saveGallery(event)"><div class="dlghead"><h3 id="galleryDlgTitle">Nuevo diseño</h3></div><div class="dlgbody">
+<input type="hidden" id="gid">
+<label>Título *</label><input id="gtitle" required>
+<label>Categoría</label><input id="gcat" placeholder="Uñas, cabello, maquillaje...">
+<label>Imagen desde galería</label><input id="gfile" type="file" accept="image/*" onchange="previewGalleryImage(event)">
+<div id="gpreview" class="hidden" style="margin:8px 0"><img id="gpreviewImg" class="cover"></div>
+<label>Imagen (URL opcional)</label><input id="gimg" placeholder="https://...">
+<div class="muted">Selecciona una foto directamente del teléfono, tablet o computadora.</div>
+<label>Descripción</label><textarea id="gdesc"></textarea>
+</div><div class="dlgfoot"><button type="button" class="btn dark" onclick="galleryDlg.close()">Cancelar</button><button class="btn">Guardar</button></div></form></dialog>
 <input id="importFile" type="file" accept="application/json" class="hidden" onchange="doImport(event)">
 <script>
 const K={services:'tb_services_v3',products:'tu_belleza_products_v1',clients:'tb_clients_v3',appts:'tb_appts_v3',sales:'tb_sales_v3',gallery:'tb_gallery_v3',settings:'tb_settings_v3'};
@@ -64,34 +110,108 @@ let services=load(K.services,[]),products=load(K.products,[{id:'1',name:'Tinte c
 function load(k,d){try{const x=localStorage.getItem(k);return x?JSON.parse(x):d}catch(e){return d}}function save(k,v){localStorage.setItem(k,JSON.stringify(v))}function money(n){return (settings.currency||'Q')+Number(n||0).toFixed(2)}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.remove('hidden');setTimeout(()=>e.classList.add('hidden'),2200)}
 function showPage(id,btn){current=id;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));document.getElementById('globalSearch').value='';renderCurrent()}
-function renderCurrent(){renderDashboard();if(current==='services')renderServices();if(current==='inventory')renderProducts();if(current==='clients')renderClients();if(current==='appointments')renderAppts();if(current==='sales')renderSales();if(current==='gallery')renderGallery();if(current==='home')renderHome()}
+function renderCurrent(){renderDashboard();if(current==='services')renderServices();if(current==='inventory')renderProducts();if(current==='clients')renderClients();if(current==='appointments')renderAppts();if(current==='sales')renderSales();if(current==='gallery')renderGallery();if(current==='home')renderHome();if(current==='settings')renderAdmin()}
 function renderDashboard(){document.getElementById('dashSales').textContent=money(sales.reduce((a,x)=>a+x.amount,0));document.getElementById('dashAppts').textContent=appts.filter(x=>x.status!=='Cancelada').length;document.getElementById('dashClients').textContent=clients.length;document.getElementById('dashLow').textContent=products.filter(x=>x.qty<=x.min).length}
 function renderHome(){const q=document.getElementById('globalSearch').value.toLowerCase();let a=services.filter(s=>(s.name+' '+s.cat).toLowerCase().includes(q)).slice(0,4);document.getElementById('homeServices').innerHTML=a.length?a.map(serviceCard).join(''):'<div class="empty">Aún no hay servicios. Pulsa “Nuevo servicio” para empezar.</div>'}
-function serviceCard(s){return `<div class="card service"><div class="row">${s.img?`<img class="service-img" src="${esc(s.img)}" onerror="this.style.display='none'">`:'<div class="service-img">✂️</div>'}<div class="grow"><b>${esc(s.name)}</b><div class="muted">${esc(s.cat||'General')} · ${s.duration||0} min</div><div class="price">${money(s.price)}</div></div></div><div class="muted" style="margin-top:8px">${esc(s.desc||'')}</div><div class="actions"><button onclick="openService('${s.id}')">✎ Editar</button><button onclick="deleteService('${s.id}')" class="danger">🗑 Eliminar</button></div></div>`}
+function serviceCard(s){return `<div class="card service"><div class="row">${s.img?`<img class="service-img" src="${esc(s.img)}" onerror="this.style.display='none'">`:'<div class="service-img">✂️</div>'}<div class="grow"><b>${esc(s.name)}</b><div class="muted">${esc(s.cat||'General')} · ${s.duration||0} min</div><div class="price">${money(s.price)}</div></div></div><div class="muted" style="margin-top:8px">${esc(s.desc||'')}</div></div>`}
 function renderServices(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=services.filter(s=>(s.name+' '+s.cat+' '+s.desc).toLowerCase().includes(q));document.getElementById('servicesList').innerHTML=a.length?a.map(serviceCard).join(''):'<div class="empty">No hay servicios. Agrega el primero.</div>'}
 function openService(id){const s=services.find(x=>x.id===id);document.getElementById('serviceDlgTitle').textContent=s?'Editar servicio':'Nuevo servicio';document.getElementById('sid').value=s?.id||'';document.getElementById('sname').value=s?.name||'';document.getElementById('sprice').value=s?.price??'';document.getElementById('sduration').value=s?.duration??60;document.getElementById('scat').value=s?.cat||'';document.getElementById('sdesc').value=s?.desc||'';document.getElementById('simg').value=s?.img||'';serviceDlg.showModal()}
 function saveService(e){e.preventDefault();const s={id:document.getElementById('sid').value||uid(),name:sname.value.trim(),price:+sprice.value,duration:+sduration.value||0,cat:scat.value.trim()||'General',desc:sdesc.value.trim(),img:simg.value.trim()};const i=services.findIndex(x=>x.id===s.id);if(i>=0)services[i]=s;else services.push(s);save(K.services,services);serviceDlg.close();toast('Servicio guardado');renderCurrent()}
 function deleteService(id){if(confirm('¿Eliminar este servicio?')){services=services.filter(x=>x.id!==id);save(K.services,services);renderCurrent()}}
-function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div><div class="actions"><button onclick="moveStock('${p.id}',1)">＋ Entrada</button><button onclick="moveStock('${p.id}',-1)">− Salida</button><button onclick="openProduct('${p.id}')">✎ Editar</button><button onclick="deleteProduct('${p.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
+function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
 function openProduct(id){const p=products.find(x=>x.id===id);productDlgTitle.textContent=p?'Editar producto':'Nuevo producto';pid.value=p?.id||'';pname.value=p?.name||'';pcat.value=p?.cat||'';pprice.value=p?.price??'';pqty.value=p?.qty??0;pmin.value=p?.min??1;productDlg.showModal()}
 function saveProduct(e){e.preventDefault();const p={id:pid.value||uid(),name:pname.value.trim(),cat:pcat.value.trim()||'General',price:+pprice.value,qty:+pqty.value,min:+pmin.value};const i=products.findIndex(x=>x.id===p.id);if(i>=0)products[i]=p;else products.push(p);save(K.products,products);productDlg.close();toast('Producto guardado');renderCurrent()}
 function deleteProduct(id){if(confirm('¿Eliminar este producto?')){products=products.filter(x=>x.id!==id);save(K.products,products);renderCurrent()}}function moveStock(id,dir){const p=products.find(x=>x.id===id),n=Number(prompt(dir>0?'Cantidad de entrada:':'Cantidad de salida:','1'));if(!n||n<=0)return;if(dir<0&&n>p.qty)return alert('No hay suficiente existencia.');p.qty+=dir*n;save(K.products,products);renderProducts();toast(dir>0?'Entrada registrada':'Salida registrada')}
-function renderClients(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=clients.filter(c=>(c.name+' '+c.phone+' '+c.note).toLowerCase().includes(q));clientsList.innerHTML=a.length?a.map(c=>`<div class="card client"><div class="row"><div class="grow"><b>${esc(c.name)}</b><div class="muted">${esc(c.phone||'Sin teléfono')}${c.birth?' · '+esc(c.birth):''}</div></div><span class="pill">${appts.filter(x=>x.clientId===c.id).length} citas</span></div><div class="muted" style="margin-top:8px">${esc(c.note||'Sin notas')}</div><div class="actions"><button onclick="openClient('${c.id}')">✎ Editar</button><button onclick="deleteClient('${c.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay clientes.</div>'}
+function renderClients(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=clients.filter(c=>(c.name+' '+c.phone+' '+c.note).toLowerCase().includes(q));clientsList.innerHTML=a.length?a.map(c=>`<div class="card client"><div class="row"><div class="grow"><b>${esc(c.name)}</b><div class="muted">${esc(c.phone||'Sin teléfono')}${c.birth?' · '+esc(c.birth):''}</div></div><span class="pill">${appts.filter(x=>x.clientId===c.id).length} citas</span></div><div class="muted" style="margin-top:8px">${esc(c.note||'Sin notas')}</div></div>`).join(''):'<div class="empty">No hay clientes.</div>'}
 function openClient(id){const c=clients.find(x=>x.id===id);clientDlgTitle.textContent=c?'Editar cliente':'Nuevo cliente';cid.value=c?.id||'';cname.value=c?.name||'';cphone.value=c?.phone||'';cbirth.value=c?.birth||'';cnote.value=c?.note||'';clientDlg.showModal()}
 function saveClient(e){e.preventDefault();const c={id:cid.value||uid(),name:cname.value.trim(),phone:cphone.value.trim(),birth:cbirth.value,note:cnote.value.trim()};const i=clients.findIndex(x=>x.id===c.id);if(i>=0)clients[i]=c;else clients.push(c);save(K.clients,clients);clientDlg.close();toast('Cliente guardado');renderCurrent()}
 function deleteClient(id){if(confirm('¿Eliminar este cliente?')){clients=clients.filter(x=>x.id!==id);save(K.clients,clients);renderCurrent()}}
 function fillSelects(){aclient.innerHTML='<option value="">Selecciona un cliente</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');aservice.innerHTML='<option value="">Selecciona un servicio</option>'+services.map(s=>`<option value="${s.id}">${esc(s.name)} — ${money(s.price)}</option>`).join('');saleClient.innerHTML='<option value="">Sin cliente</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}
 function openAppointment(id){fillSelects();const a=appts.find(x=>x.id===id);apptDlgTitle.textContent=a?'Editar cita':'Nueva cita';aid.value=a?.id||'';aclient.value=a?.clientId||'';aservice.value=a?.serviceId||'';adate.value=a?.date||new Date().toISOString().slice(0,10);atime.value=a?.time||'10:00';astatus.value=a?.status||'Pendiente';anote.value=a?.note||'';apptDlg.showModal()}
 function saveAppointment(e){e.preventDefault();const a={id:aid.value||uid(),clientId:aclient.value,serviceId:aservice.value,date:adate.value,time:atime.value,status:astatus.value,note:anote.value.trim()};const i=appts.findIndex(x=>x.id===a.id);if(i>=0)appts[i]=a;else appts.push(a);save(K.appts,appts);apptDlg.close();toast('Cita guardada');renderCurrent()}
-function renderAppts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=[...appts].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)).filter(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return ((c?.name||'')+' '+(s?.name||'')+' '+x.status).toLowerCase().includes(q)});apptsList.innerHTML=a.length?a.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card appt"><div class="row"><div class="grow"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')}</div></div><span class="pill ${x.status==='Cancelada'?'danger':x.status==='Atendida'?'good':'warn'}">${esc(x.status)}</span></div><div style="margin-top:10px"><b>📅 ${esc(x.date)} · ${esc(x.time)}</b></div><div class="muted">${esc(x.note||'')}</div><div class="actions"><button onclick="openAppointment('${x.id}')">✎ Editar</button><button onclick="deleteAppt('${x.id}')" class="danger">🗑</button></div></div>`}).join(''):'<div class="empty">No hay citas.</div>'}
+function renderAppts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=[...appts].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)).filter(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return ((c?.name||'')+' '+(s?.name||'')+' '+x.status).toLowerCase().includes(q)});apptsList.innerHTML=a.length?a.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card appt"><div class="row"><div class="grow"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')}</div></div><span class="pill ${x.status==='Cancelada'?'danger':x.status==='Atendida'?'good':'warn'}">${esc(x.status)}</span></div><div style="margin-top:10px"><b>📅 ${esc(x.date)} · ${esc(x.time)}</b></div><div class="muted">${esc(x.note||'')}</div></div>`}).join(''):'<div class="empty">No hay citas.</div>'}
 function deleteAppt(id){if(confirm('¿Eliminar esta cita?')){appts=appts.filter(x=>x.id!==id);save(K.appts,appts);renderCurrent()}}
 function openSale(){fillSelects();saleConcept.value='';saleAmount.value='';saleType.value='Servicio';saleClient.value='';saleDlg.showModal()}
 function saveSale(e){e.preventDefault();sales.unshift({id:uid(),concept:saleConcept.value.trim(),type:saleType.value,amount:+saleAmount.value,clientId:saleClient.value,date:new Date().toISOString()});save(K.sales,sales);saleDlg.close();toast('Venta registrada');renderCurrent()}
-function renderSales(){const total=sales.reduce((a,x)=>a+x.amount,0),today=new Date().toISOString().slice(0,10);salesTotal.textContent=money(total);salesToday.textContent=money(sales.filter(x=>x.date.slice(0,10)===today).reduce((a,x)=>a+x.amount,0));const q=document.getElementById('globalSearch').value.toLowerCase();const a=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));salesList.innerHTML=a.length?a.map(x=>`<div class="card sale"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div><div class="actions"><button onclick="deleteSale('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay ventas.</div>'}
+function renderSales(){const total=sales.reduce((a,x)=>a+x.amount,0),today=new Date().toISOString().slice(0,10);salesTotal.textContent=money(total);salesToday.textContent=money(sales.filter(x=>x.date.slice(0,10)===today).reduce((a,x)=>a+x.amount,0));const q=document.getElementById('globalSearch').value.toLowerCase();const a=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));salesList.innerHTML=a.length?a.map(x=>`<div class="card sale"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div></div>`).join(''):'<div class="empty">No hay ventas.</div>'}
 function deleteSale(id){if(confirm('¿Eliminar esta venta?')){sales=sales.filter(x=>x.id!==id);save(K.sales,sales);renderCurrent()}}
-function openGallery(){gtitle.value='';gcat.value='';gimg.value='';gdesc.value='';galleryDlg.showModal()}function saveGallery(e){e.preventDefault();gallery.unshift({id:uid(),title:gtitle.value.trim(),cat:gcat.value.trim(),img:gimg.value.trim(),desc:gdesc.value.trim()});save(K.gallery,gallery);galleryDlg.close();toast('Diseño guardado');renderGallery()}
-function renderGallery(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=gallery.filter(x=>(x.title+' '+x.cat+' '+x.desc).toLowerCase().includes(q));galleryList.innerHTML=a.length?a.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div><div class="actions"><button onclick="deleteGallery('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>'}
-function deleteGallery(id){if(confirm('¿Eliminar este diseño?')){gallery=gallery.filter(x=>x.id!==id);save(K.gallery,gallery);renderGallery()}}
+let galleryPendingImage='';
+function openGallery(id){
+  const g=gallery.find(x=>x.id===id);
+  galleryDlgTitle.textContent=g?'Editar diseño':'Nuevo diseño';
+  gid.value=g?.id||'';
+  gtitle.value=g?.title||'';
+  gcat.value=g?.cat||'';
+  gimg.value=(g?.img&&!g.img.startsWith('data:'))?g.img:'';
+  gdesc.value=g?.desc||'';
+  galleryPendingImage=(g?.img&&g.img.startsWith('data:'))?g.img:'';
+  gfile.value='';
+  if(galleryPendingImage){gpreviewImg.src=galleryPendingImage;gpreview.classList.remove('hidden')}else{gpreview.classList.add('hidden');gpreviewImg.removeAttribute('src')}
+  galleryDlg.showModal()
+}
+function previewGalleryImage(e){
+  const f=e.target.files?.[0];
+  if(!f)return;
+  if(!f.type.startsWith('image/')){alert('Selecciona una imagen.');e.target.value='';return}
+  const r=new FileReader();
+  r.onload=()=>{galleryPendingImage=r.result;gpreviewImg.src=r.result;gpreview.classList.remove('hidden')};
+  r.readAsDataURL(f)
+}
+function saveGallery(e){
+  e.preventDefault();
+  const id=gid.value||uid(), existing=gallery.find(x=>x.id===id);
+  const image=galleryPendingImage||gimg.value.trim()||existing?.img||'';
+  if(!image){alert('Selecciona una imagen de la galería o coloca un URL.');return}
+  const g={id:id,title:gtitle.value.trim(),cat:gcat.value.trim(),img:image,desc:gdesc.value.trim()};
+  const i=gallery.findIndex(x=>x.id===id);
+  if(i>=0)gallery[i]=g;else gallery.unshift(g);
+  save(K.gallery,gallery);galleryPendingImage='';galleryDlg.close();toast('Diseño guardado');renderCurrent()
+}
+function renderGallery(){
+  const q=document.getElementById('globalSearch').value.toLowerCase();
+  const a=gallery.filter(x=>(x.title+' '+x.cat+' '+x.desc).toLowerCase().includes(q));
+  galleryList.innerHTML=a.length?a.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>'
+}
+function deleteGallery(id){if(confirm('¿Eliminar este diseño?')){gallery=gallery.filter(x=>x.id!==id);save(K.gallery,gallery);renderCurrent()}}
+
+function goAdmin(type){
+  showPage('settings');
+  setTimeout(()=>{
+    if(type==='service')openService();
+    if(type==='product')openProduct();
+    if(type==='client')openClient();
+    if(type==='appointment')openAppointment();
+    if(type==='sale')openSale();
+    if(type==='gallery')openGallery();
+  },50)
+}
+function renderAdmin(){
+  const q=document.getElementById('globalSearch').value.toLowerCase();
+
+  const ss=services.filter(s=>(s.name+' '+s.cat+' '+s.desc).toLowerCase().includes(q));
+  adminServices.innerHTML=ss.length?ss.map(s=>`<div class="card"><b>${esc(s.name)}</b><div class="muted">${esc(s.cat||'General')} · ${s.duration||0} min · ${money(s.price)}</div><div class="actions"><button onclick="openService('${s.id}')">✎ Editar</button><button onclick="deleteService('${s.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay servicios.</div>';
+
+  const ps=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));
+  adminProducts.innerHTML=ps.length?ps.map(p=>`<div class="card"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)} · Existencia: ${p.qty} · Mínimo: ${p.min}</div><div class="actions"><button onclick="moveStock('${p.id}',1)">＋ Entrada</button><button onclick="moveStock('${p.id}',-1)">− Salida</button><button onclick="openProduct('${p.id}')">✎ Editar</button><button onclick="deleteProduct('${p.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>';
+
+  const cs=clients.filter(c=>(c.name+' '+c.phone+' '+c.note).toLowerCase().includes(q));
+  adminClients.innerHTML=cs.length?cs.map(c=>`<div class="card"><b>${esc(c.name)}</b><div class="muted">${esc(c.phone||'Sin teléfono')}${c.birth?' · '+esc(c.birth):''}</div><div class="actions"><button onclick="openClient('${c.id}')">✎ Editar</button><button onclick="deleteClient('${c.id}')" class="danger">🗑</button></div></div>`).join(''):'<div class="empty">No hay clientes.</div>';
+
+  const as=[...appts].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)).filter(x=>{
+    const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);
+    return ((c?.name||'')+' '+(s?.name||'')+' '+x.status).toLowerCase().includes(q)
+  });
+  adminAppts.innerHTML=as.length?as.map(x=>{const c=clients.find(c=>c.id===x.clientId),s=services.find(s=>s.id===x.serviceId);return `<div class="card"><b>${esc(c?.name||'Cliente eliminado')}</b><div class="muted">${esc(s?.name||'Servicio eliminado')} · ${esc(x.date)} · ${esc(x.time)} · ${esc(x.status)}</div><div class="actions"><button onclick="openAppointment('${x.id}')">✎ Editar</button><button onclick="deleteAppt('${x.id}')" class="danger">🗑</button></div></div>`}).join(''):'<div class="empty">No hay citas.</div>';
+
+  const sl=sales.filter(x=>(x.concept+' '+x.type).toLowerCase().includes(q));
+  adminSales.innerHTML=sl.length?sl.map(x=>`<div class="card"><div class="row"><div class="grow"><b>${esc(x.concept)}</b><div class="muted">${esc(x.type)} · ${new Date(x.date).toLocaleString('es-GT')}</div></div><div class="price">${money(x.amount)}</div></div><div class="actions"><button onclick="deleteSale('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty">No hay ventas.</div>';
+
+  const gs=gallery.filter(x=>(x.title+' '+x.cat+' '+x.desc).toLowerCase().includes(q));
+  adminGallery.innerHTML=gs.length?gs.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div><div class="actions"><button onclick="openGallery('${x.id}')">✎ Editar</button><button onclick="deleteGallery('${x.id}')" class="danger">🗑 Eliminar</button></div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>';
+
+  loadSettings()
+}
+
 function saveSettings(){settings={name:setName.value.trim()||'Tu Belleza',tagline:setTagline.value.trim()||'Salón de belleza',currency:setCurrency.value};save(K.settings,settings);appName.textContent=settings.name;tagline.textContent=settings.tagline;toast('Configuración guardada');renderCurrent()}
 function loadSettings(){setName.value=settings.name;setTagline.value=settings.tagline;setCurrency.value=settings.currency;appName.textContent=settings.name;tagline.textContent=settings.tagline}
 async function shareApp(){const data={title:settings.name,text:'Mira mi app Tu Belleza',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toast('Enlace copiado para compartir')}}catch(e){}}
