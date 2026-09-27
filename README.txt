@@ -1,19 +1,16 @@
-TU BELLEZA - VERSION CUENTA + INVENTARIO
+TU BELLEZA — V5
 
-Esta versión agrega:
-- Cuenta con Supabase para compartir datos entre dispositivos.
-- Inicio de sesión y creación de cuenta.
-- Datos separados por usuario mediante RLS.
-- Sincronización de servicios, inventario, clientes, citas, ventas, galería y configuración.
-- Inventario: solo permite descontar productos vendidos desde la pestaña Inventario.
-- Alta/edición/eliminación de productos queda en Administrar.
-- Mantiene la selección de imágenes desde la galería.
+Cambios principales:
+- La pestaña Inventario es solo de consulta y descuento de productos vendidos.
+- En Inventario no se puede agregar, editar ni eliminar productos.
+- Cada producto muestra únicamente el botón “− Quitar vendido”.
+- Al tocarlo se indica cuántas unidades vendidas se quieren descontar.
+- No permite descontar más unidades de las disponibles.
+- Agregar/editar/eliminar productos sigue estando en Administrar.
+- Se mantiene la protección contra selección accidental de texto en la interfaz.
 
-IMPORTANTE:
-1. Conserva icon-192.png e icon-512.png en GitHub.
-2. Configura supabase-config.js con Project URL y Publishable/anon key.
-3. Ejecuta el SQL de SUPABASE_SETUP.txt en Supabase.
-4. Sube index.html, sw.js, manifest.webmanifest, supabase-config.js y README/SUPABASE_SETUP.
-5. Actualiza la página después de publicar.
-
-No uses service_role key en la página.
+Para actualizar GitHub Pages:
+1. Reemplaza index.html, sw.js, manifest.webmanifest y README.txt.
+2. Conserva icon-192.png e icon-512.png.
+3. Guarda/Commit los cambios.
+4. Recarga la página. Si sigue apareciendo la versión anterior, borra los datos/caché del sitio y vuelve a abrirlo.

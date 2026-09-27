@@ -25,6 +25,31 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
 /* Tablet Android 10 */
 @media (min-width:800px){main{max-width:1180px;padding-left:22px;padding-right:22px}.grid{grid-template-columns:repeat(4,1fr)}.gallery{grid-template-columns:repeat(4,1fr)}.quick{grid-template-columns:repeat(6,1fr)}header{padding-left:24px;padding-right:24px}.search{max-width:1180px;margin-left:auto;margin-right:auto}}
 @media (orientation:landscape){body{min-height:100dvh}nav button{font-size:12px;padding-top:10px;padding-bottom:10px}}
+
+/* Evitar selección accidental de textos de la interfaz en celulares/tablets.
+   Los campos donde el usuario escribe siguen siendo seleccionables/editables. */
+html, body, body * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none;
+}
+
+input, textarea, select, option, [contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default;
+}
+
+/* Evita el arrastre accidental de imágenes/logos */
+img, svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 </style>
 </head>
 <body>
@@ -41,7 +66,7 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
   <div class="sectiontitle"><h2>Servicios destacados</h2><button class="btn dark" onclick="showPage('services')">Ver todos</button></div><div id="homeServices"></div>
 </section>
 <section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Consulta tus servicios y precios.</p></div><button class="btn dark" onclick="goAdminSection('service')">✎ Editar</button></div><div id="servicesList"></div></section>
-<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Consulta existencias y descuenta los productos vendidos.</p></div></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
+<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Consulta existencias. Aquí solo puedes quitar unidades de productos vendidos.</p></div></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
 <section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Consulta las ventas registradas.</p></div><button class="btn dark" onclick="goAdminSection('sale')">✎ Editar</button></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
 <section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Consulta datos e historial básico.</p></div><button class="btn dark" onclick="goAdminSection('client')">✎ Editar</button></div><div id="clientsList"></div></section>
 <section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Consulta la agenda.</p></div><button class="btn dark" onclick="goAdminSection('appointment')">✎ Editar</button></div><div id="apptsList"></div></section>
@@ -156,7 +181,7 @@ function openService(id){const s=services.find(x=>x.id===id);document.getElement
 function previewServiceImage(e){const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('image/')){alert('Selecciona una imagen.');e.target.value='';return}const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=1200,scale=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);servicePendingImage=c.toDataURL('image/jpeg',0.75);spreviewImg.src=servicePendingImage;spreview.classList.remove('hidden')};img.src=r.result};r.readAsDataURL(f)}
 function saveService(e){e.preventDefault();const id=document.getElementById('sid').value||uid(),existing=services.find(x=>x.id===id);const image=servicePendingImage||simg.value.trim()||existing?.img||'';const s={id,name:sname.value.trim(),price:+sprice.value,duration:+sduration.value||0,cat:scat.value.trim()||'General',desc:sdesc.value.trim(),img:image};const i=services.findIndex(x=>x.id===id);if(i>=0)services[i]=s;else services.push(s);try{save(K.services,services)}catch(err){if(i>=0)services[i]=existing;else services.pop();alert('La imagen es demasiado grande. Prueba con otra foto.');return}servicePendingImage='';serviceDlg.close();toast('Servicio guardado');renderCurrent()}
 function deleteService(id){if(confirm('¿Eliminar este servicio?')){services=services.filter(x=>x.id!==id);save(K.services,services);renderCurrent()}}
-function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div><div class="actions"><button class="btn" onclick="moveStock('${p.id}',-1)">− Producto vendido</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
+function renderProducts(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=products.filter(p=>(p.name+' '+p.cat).toLowerCase().includes(q));nProducts.textContent=products.length;nUnits.textContent=products.reduce((a,p)=>a+p.qty,0).toFixed(0);nLow.textContent=products.filter(p=>p.qty<=p.min).length;nValue.textContent=money(products.reduce((a,p)=>a+p.qty*p.price,0));document.getElementById('products').innerHTML=a.length?a.map(p=>`<div class="card product"><div class="row"><div class="grow"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat||'General')} · ${money(p.price)}</div></div><div><div class="price">${p.qty}</div><div class="muted">exist.</div></div></div><div style="margin-top:8px"><span class="pill ${p.qty<=p.min?'danger':'good'}">Mínimo: ${p.min}</span></div><div class="actions"><button class="btn" onclick="moveStock('${p.id}',-1)">− Quitar vendido</button></div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
 function openProduct(id){const p=products.find(x=>x.id===id);productDlgTitle.textContent=p?'Editar producto':'Nuevo producto';pid.value=p?.id||'';pname.value=p?.name||'';pcat.value=p?.cat||'';pprice.value=p?.price??'';pqty.value=p?.qty??0;pmin.value=p?.min??1;productDlg.showModal()}
 function saveProduct(e){e.preventDefault();const p={id:pid.value||uid(),name:pname.value.trim(),cat:pcat.value.trim()||'General',price:+pprice.value,qty:+pqty.value,min:+pmin.value};const i=products.findIndex(x=>x.id===p.id);if(i>=0)products[i]=p;else products.push(p);save(K.products,products);productDlg.close();toast('Producto guardado');renderCurrent()}
 function deleteProduct(id){if(confirm('¿Eliminar este producto?')){products=products.filter(x=>x.id!==id);save(K.products,products);renderCurrent()}}function moveStock(id,dir){const p=products.find(x=>x.id===id);if(!p)return;const n=Number(prompt(dir>0?'Cantidad de entrada:':'¿Cuántas unidades se vendieron de '+p.name+'?','1'));if(!Number.isFinite(n)||n<=0)return;if(dir<0&&n>p.qty)return alert('No hay suficiente existencia.');if(dir<0&&!confirm('¿Descontar '+n+' unidad(es) de '+p.name+' como vendidas?'))return;p.qty += dir*n;save(K.products,products);renderProducts();renderAdmin();toast(dir>0?'Entrada registrada':'Producto vendido')}
@@ -289,4 +314,28 @@ function restoreData(){document.getElementById('importFile').click()}function do
 function clearAll(){if(!confirm('Esto borrará servicios, inventario, clientes, citas, ventas y galería de ESTE dispositivo. ¿Continuar?'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));location.reload()}
 loadSettings();renderCurrent();initCloud();
 </script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=8').catch(()=>{}));</script>
+
+<script>
+(function () {
+  function isEditable(el) {
+    return el && (
+      el.matches('input, textarea, select, option, [contenteditable="true"]') ||
+      el.closest('input, textarea, select, [contenteditable="true"]')
+    );
+  }
+
+  document.addEventListener('selectstart', function (e) {
+    if (!isEditable(e.target)) e.preventDefault();
+  }, {passive:false});
+
+  document.addEventListener('dragstart', function (e) {
+    if (!isEditable(e.target)) e.preventDefault();
+  }, {passive:false});
+
+  document.addEventListener('contextmenu', function (e) {
+    if (!isEditable(e.target)) e.preventDefault();
+  });
+})();
+</script>
+
 </body></html>
