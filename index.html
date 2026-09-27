@@ -189,7 +189,7 @@ function serviceCard(s){
   const imgs=getServiceImages(s);
   const main=imgs[0];
   const photo=main?`<img class="service-img" src="${esc(main)}" onerror="this.style.display='none'">`:'<div class="service-img">✂️</div>';
-  const count=imgs.length>1?`<div class="service-photo-count">📷 ${imgs.length} fotos · Toca para ver</div>`:'<div class="service-photo-count">${imgs.length?'📷 Toca para ver la foto':'Toca para ver detalles'}</div>';
+  const count=imgs.length>1?`<div class="service-photo-count">📷 ${imgs.length} fotos · Toca para ver</div>`:`<div class="service-photo-count">${imgs.length?'📷 Toca para ver la foto':'Toca para ver detalles'}</div>`;
   return `<div class="card service service-click" onclick="openServiceDetail('${s.id}')"><div class="row">${photo}<div class="grow"><b>${esc(s.name)}</b><div class="muted">${esc(s.cat||'General')} · ${s.duration||0} min</div><div class="price">${money(s.price)}</div></div></div><div class="muted" style="margin-top:8px">${esc(s.desc||'')}</div>${count}</div>`
 }
 function renderServices(){const q=document.getElementById('globalSearch').value.toLowerCase();const a=services.filter(s=>(s.name+' '+s.cat+' '+s.desc).toLowerCase().includes(q));document.getElementById('servicesList').innerHTML=a.length?a.map(serviceCard).join(''):'<div class="empty">No hay servicios. Agrega el primero.</div>'}
@@ -349,7 +349,7 @@ function backupData(){const data={services,products,clients,appts,sales,gallery,
 function restoreData(){document.getElementById('importFile').click()}function doImport(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);services=d.services||[];products=d.products||[];clients=d.clients||[];appts=d.appts||[];sales=d.sales||[];gallery=d.gallery||[];settings=d.settings||settings;Object.entries({[K.services]:services,[K.products]:products,[K.clients]:clients,[K.appts]:appts,[K.sales]:sales,[K.gallery]:gallery,[K.settings]:settings}).forEach(([k,v])=>save(k,v));loadSettings();renderCurrent();initCloud();toast('Respaldo importado')}catch(err){alert('El archivo no es un respaldo válido.')}};r.readAsText(f);e.target.value=''}
 function clearAll(){if(!confirm('Esto borrará servicios, inventario, clientes, citas, ventas y galería de ESTE dispositivo. ¿Continuar?'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));location.reload()}
 loadSettings();renderCurrent();initCloud();
-</script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=9').catch(()=>{}));</script>
+</script><script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=10').catch(()=>{}));</script>
 
 <script>
 (function () {
