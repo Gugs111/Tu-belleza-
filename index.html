@@ -38,12 +38,12 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
   <div class="quick"><button class="q1" onclick="goAdmin('service')">✂️<br>Nuevo servicio</button><button class="q2" onclick="goAdmin('product')">📦<br>Producto</button><button class="q3" onclick="goAdmin('client')">👥<br>Cliente</button><button class="q4" onclick="goAdmin('appointment')">📅<br>Cita</button><button class="q5" onclick="goAdmin('sale')">🛒<br>Venta</button><button class="q6" onclick="showPage('gallery')">🖼️<br>Galería</button></div>
   <div class="sectiontitle"><h2>Servicios destacados</h2><button class="btn dark" onclick="showPage('services')">Ver todos</button></div><div id="homeServices"></div>
 </section>
-<section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Agrega y modifica tus servicios y precios.</p></div></div><div id="servicesList"></div></section>
-<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Entradas, salidas y alertas de stock.</p></div></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
-<section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Registra ventas de servicios o productos.</p></div></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
-<section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Datos e historial básico de tus clientas.</p></div></div><div id="clientsList"></div></section>
-<section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Agenda y consulta las citas.</p></div></div><div id="apptsList"></div></section>
-<section id="gallery" class="page hidden"><div class="sectiontitle"><div><h2>🖼️ Galería</h2><p>Guarda ejemplos de tus trabajos.</p></div></div><div id="galleryList" class="gallery"></div></section>
+<section id="services" class="page hidden"><div class="sectiontitle"><div><h2>✂️ Servicios</h2><p>Consulta tus servicios y precios.</p></div><button class="btn dark" onclick="goAdminSection('service')">✎ Editar</button></div><div id="servicesList"></div></section>
+<section id="inventory" class="page hidden"><div class="sectiontitle"><div><h2>📦 Inventario</h2><p>Consulta existencias y alertas de stock.</p></div><button class="btn dark" onclick="goAdminSection('product')">✎ Editar</button></div><div class="stat"><div class="card"><b id="nProducts">0</b>Productos</div><div class="card"><b id="nUnits">0</b>Unidades</div><div class="card"><b id="nLow">0</b>Bajo stock</div><div class="card"><b id="nValue">Q0</b>Valor</div></div><div class="sectiontitle"><h2>Productos</h2></div><div id="products"></div></section>
+<section id="sales" class="page hidden"><div class="sectiontitle"><div><h2>🛒 Ventas</h2><p>Consulta las ventas registradas.</p></div><button class="btn dark" onclick="goAdminSection('sale')">✎ Editar</button></div><div class="stat"><div class="card"><b id="salesTotal">Q0</b>Total acumulado</div><div class="card"><b id="salesToday">Q0</b>Hoy</div></div><div id="salesList" style="margin-top:10px"></div></section>
+<section id="clients" class="page hidden"><div class="sectiontitle"><div><h2>👥 Clientes</h2><p>Consulta datos e historial básico.</p></div><button class="btn dark" onclick="goAdminSection('client')">✎ Editar</button></div><div id="clientsList"></div></section>
+<section id="appointments" class="page hidden"><div class="sectiontitle"><div><h2>📅 Citas</h2><p>Consulta la agenda.</p></div><button class="btn dark" onclick="goAdminSection('appointment')">✎ Editar</button></div><div id="apptsList"></div></section>
+<section id="gallery" class="page hidden"><div class="sectiontitle"><div><h2>🖼️ Galería</h2><p>Consulta tus diseños.</p></div><button class="btn dark" onclick="goAdminSection('gallery')">✎ Editar</button></div><div id="galleryList" class="gallery"></div></section>
 <section id="settings" class="page hidden">
   <div class="sectiontitle"><div><h2>⚙️ Administrar</h2><p>Aquí puedes modificar todo. Las demás pestañas son para consultar.</p></div></div>
   <div class="card hero"><h2>Centro de administración</h2><p>Agrega, edita o elimina servicios, productos, clientes, citas, ventas y diseños desde esta única pestaña.</p></div>
@@ -97,7 +97,7 @@ nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:#17141b;border-
 <input type="hidden" id="gid">
 <label>Título *</label><input id="gtitle" required>
 <label>Categoría</label><input id="gcat" placeholder="Uñas, cabello, maquillaje...">
-<label>Imagen desde galería</label><input id="gfile" type="file" accept="image/*" onchange="previewGalleryImage(event)">
+<label>Imagen</label><button type="button" class="btn dark" style="width:100%;margin:4px 0 8px" onclick="document.getElementById('gfile').click()">📷 Elegir imagen de la galería</button><input id="gfile" type="file" accept="image/*" onchange="previewGalleryImage(event)" style="display:none">
 <div id="gpreview" class="hidden" style="margin:8px 0"><img id="gpreviewImg" class="cover"></div>
 <label>Imagen (URL opcional)</label><input id="gimg" placeholder="https://...">
 <div class="muted">Selecciona una foto directamente del teléfono, tablet o computadora.</div>
@@ -154,18 +154,40 @@ function previewGalleryImage(e){
   if(!f)return;
   if(!f.type.startsWith('image/')){alert('Selecciona una imagen.');e.target.value='';return}
   const r=new FileReader();
-  r.onload=()=>{galleryPendingImage=r.result;gpreviewImg.src=r.result;gpreview.classList.remove('hidden')};
-  r.readAsDataURL(f)
+  r.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=1200;
+      const scale=Math.min(1,max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(img.width*scale));
+      c.height=Math.max(1,Math.round(img.height*scale));
+      const ctx=c.getContext('2d');
+      ctx.drawImage(img,0,0,c.width,c.height);
+      galleryPendingImage=c.toDataURL('image/jpeg',0.75);
+      gpreviewImg.src=galleryPendingImage;
+      gpreview.classList.remove('hidden');
+    };
+    img.src=r.result;
+  };
+  r.readAsDataURL(f);
 }
 function saveGallery(e){
   e.preventDefault();
   const id=gid.value||uid(), existing=gallery.find(x=>x.id===id);
   const image=galleryPendingImage||gimg.value.trim()||existing?.img||'';
-  if(!image){alert('Selecciona una imagen de la galería o coloca un URL.');return}
-  const g={id:id,title:gtitle.value.trim(),cat:gcat.value.trim(),img:image,desc:gdesc.value.trim()};
+  if(!image){alert('Primero pulsa “Elegir imagen de la galería” y selecciona una foto.');return}
+  const g={id:id,title:gtitle.value.trim()||'Diseño',cat:gcat.value.trim(),img:image,desc:gdesc.value.trim()};
   const i=gallery.findIndex(x=>x.id===id);
   if(i>=0)gallery[i]=g;else gallery.unshift(g);
-  save(K.gallery,gallery);galleryPendingImage='';galleryDlg.close();toast('Diseño guardado');renderCurrent()
+  try{
+    save(K.gallery,gallery);
+  }catch(err){
+    if(i>=0)gallery.splice(i,1);else gallery.shift();
+    alert('La imagen es demasiado grande para el almacenamiento del navegador. Prueba con otra foto.');
+    return;
+  }
+  galleryPendingImage='';galleryDlg.close();toast('Diseño guardado');renderCurrent();
 }
 function renderGallery(){
   const q=document.getElementById('globalSearch').value.toLowerCase();
@@ -173,6 +195,15 @@ function renderGallery(){
   galleryList.innerHTML=a.length?a.map(x=>`<div class="card"><img src="${esc(x.img||'icon-192.png')}" class="cover" onerror="this.src='icon-192.png'"><b>${esc(x.title)}</b><div class="muted">${esc(x.cat||'General')}</div><div class="muted">${esc(x.desc||'')}</div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Aún no hay diseños.</div>'
 }
 function deleteGallery(id){if(confirm('¿Eliminar este diseño?')){gallery=gallery.filter(x=>x.id!==id);save(K.gallery,gallery);renderCurrent()}}
+
+function goAdminSection(type){
+  showPage('settings');
+  setTimeout(()=>{
+    const ids={service:'adminServices',product:'adminProducts',client:'adminClients',appointment:'adminAppts',sale:'adminSales',gallery:'adminGallery'};
+    const el=document.getElementById(ids[type]);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },60);
+}
 
 function goAdmin(type){
   showPage('settings');
