@@ -14,3 +14,6 @@ Para actualizar GitHub Pages:
 2. Conserva icon-192.png e icon-512.png.
 3. Guarda/Commit los cambios.
 4. Recarga la página. Si sigue apareciendo la versión anterior, borra los datos/caché del sitio y vuelve a abrirlo.
+
+
+V6: los servicios permiten varias fotos desde la galería. Al tocar un servicio se abre su detalle y las imágenes; se puede tocar cada imagen para verla grande. El selector de fotos usa multiple.
