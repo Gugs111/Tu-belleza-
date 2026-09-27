@@ -20,3 +20,10 @@ CAMBIOS DE ESTA VERSION
 - La Galería permite seleccionar imágenes directamente desde la galería/archivos del teléfono, tablet o computadora.
 - Las imágenes seleccionadas se guardan localmente en el dispositivo mediante el almacenamiento del navegador.
 - Para GitHub Pages, reemplaza index.html, manifest.webmanifest y sw.js; conserva icon-192.png e icon-512.png.
+
+
+VERSIÓN 7
+- Cada apartado de consulta tiene el botón ✎ Editar en la esquina derecha.
+- Servicios y Galería permiten elegir una imagen directamente desde la galería del teléfono/tablet/computadora.
+- Las imágenes se reducen automáticamente para poder guardarlas localmente.
+- Se actualizó el Service Worker para evitar que siga cargando la versión anterior.
